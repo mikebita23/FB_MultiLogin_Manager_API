@@ -2,6 +2,7 @@ const Models = require('../models');
 const jwt = require('jsonwebtoken');
 const Bycrpt = require('bcrypt');
 const Hlp = require('../helpers/userHelpers')
+const secret = process.env.JWT_KEY
 
 function getUsers(req, res) {
     Models.User.findAll().then((Result) => {
@@ -98,14 +99,19 @@ function updateUser(req, res) {
             ValidationResponse = Hlp.ValidateUserFormat(user)
             if (ValidationResponse !== true) return res.status(400).json({ message: "Invalide Format !", error: ValidationResponse });
 
-            Models.User.update(user, { where: { id: id } }).then(result => {
-                res.status(200).json(result)
-            }).catch(err => {
-                res.status(500).json({
-                    message: "Something went wrong",
-                    error: err
+            Bycrpt.genSalt(10, (err, salt) => {
+                Bycrpt.hash(result.passWord, salt, (err, hash) => {
+                    user.passWord = hash
+                    Models.User.update(user, { where: { id: id } }).then(result => {
+                        res.status(200).json(result)
+                    }).catch(err => {
+                        res.status(500).json({
+                            message: "Something went wrong",
+                            error: err
+                        })
+                    });
                 })
-            });
+            })
 
         } else {
             res.status(404).json({
@@ -114,7 +120,7 @@ function updateUser(req, res) {
         }
     }).catch(err => {
         res.status(500).json({
-            message: "Something went wrong",
+            message: "Something went wrong ----",
             error: err
         })
     });
@@ -181,23 +187,39 @@ function logIn(req, res) {
     Models.User.findOne({
         where: { email: req.body.email }
     }).then(user => {
-        Bycrpt.compare(req.body.passWord, user.passWord, (err, result) => {
-            if (result) {
-                const Token = jwt.sign({
-                    email: user.email,
-                    userId: user.id
-                }, 'secret', (err, token) => {
-                    res.status(200).json({
-                        message: "Authentification Successfull !",
-                        token: token
-                    })
-                });
-            } else {
+        if(user != null) {
+            Bycrpt.compare(req.body.passWord, user.passWord, (err, result) => {
+                if (result) {
+                    let date = new Date()
+                    const Token = jwt.sign({
+                        email: user.email,
+                        userId: user.id
+                    }, 
+                    secret,
+                    {
+                        expiresIn: '1h'
+                    },
+                    (err, token) => {
+                        console.log(token);
+                        res.status(200).json({
+                            message: "Authentification Successfull !",
+                            token: token
+                        })
+                    });
+                }else{
                 res.status(401).json({
                     message: "Authentifiaction Error !",
-                });
-            }
-        });
+                    err: "Invalid Password !"
+                }); 
+                }
+            });
+        }else{
+            res.status(401).json({
+                message: "Authentifiaction Error !",
+                err: "Invalid Email !"
+            });
+        }
+        
     }).catch(err => {
         res.status(500).json({
             message: "Something went wrong",

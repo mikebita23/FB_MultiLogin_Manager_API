@@ -40,7 +40,7 @@ function ValidateUserFormat(User) {
 }
 
 function fetchUserFromRequest(body) {
-    if(Hlp.hasAllParams(body, ['firstName', 'lastName', 'email', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'] )){
+    if(hasAllParams(body, ['firstName', 'lastName', 'email', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'] )){
         return {
             firstName: body.firstName,
             lastName: body.lastName,
@@ -62,7 +62,6 @@ function hasAllParams(req, params) {
     }
     return true;
 }
-
 
 module.exports = {
     ValidateUserFormat: ValidateUserFormat,

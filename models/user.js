@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.AssociateToForfait = this.belongsTo(models.User, {
+        foreignKey: 'forfaitId',
+        onDelete: 'CASCADE'
+      });
+
     }
   };
   User.init({
