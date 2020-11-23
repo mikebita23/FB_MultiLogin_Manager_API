@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       });
 
+      this.AssociateToMessage = this.hasMany(models.Message,{
+        foreignKey: 'id'
+      })
+
     }
   };
   User.init({
