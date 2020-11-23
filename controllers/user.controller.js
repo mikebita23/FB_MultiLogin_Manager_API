@@ -193,7 +193,8 @@ function logIn(req, res) {
                     let date = new Date()
                     const Token = jwt.sign({
                         email: user.email,
-                        userId: user.id
+                        userId: user.id,
+                        isAdmin: user.role == 'ADMIN'
                     }, 
                     secret,
                     {

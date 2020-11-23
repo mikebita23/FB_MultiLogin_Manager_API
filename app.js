@@ -19,6 +19,7 @@ app.get('/', (req, res)=> { res.send(`
 
 `) });
 app.use('/users', Routes.Users);
+app.use('/Msg', Routes.Messages)
 
 // START LISTENING
 app.listen(process.env.LISTEN_PORT || 3003);
