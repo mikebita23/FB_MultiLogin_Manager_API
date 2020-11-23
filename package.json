@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "initInstall" : "npm i -g bcrypt && npm i",
+    "initInstall": "npm i -g bcrypt && npm i",
     "start": "nodemon -r dotenv/config app.js"
   },
   "repository": {
@@ -22,6 +22,7 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "faker": "^5.1.0",
     "fastest-validator": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",

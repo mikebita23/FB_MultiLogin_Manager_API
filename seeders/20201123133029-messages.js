@@ -2,18 +2,14 @@
 
 const faker = require('faker');
 
-const usersList =  [];
+const messagesLists = [];
 
-for (let i = 0; i < 1000; i++) {
-    usersList.push({
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      email: faker.internet.email(),
-      phoneNumber: faker.phone.phoneNumber('0#########'),
-      passWord: faker.internet.password(),
-      role: "USER",
-      forfaitId: faker.random.number({min: 1, max: 3})
-    })
+for (let i = 0; i < 600; i++) {
+  messagesLists.push({
+    Object: faker.lorem.text(5),
+    Content: faker.lorem.text(5),
+    senderId: faker.random.number({min: 1000, max: 2000})
+  });
 }
 
 module.exports = {
@@ -27,8 +23,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-      return queryInterface.bulkInsert('Users', usersList, {});
-
+   return queryInterface.bulkInsert('messages', messagesLists, {});
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -38,8 +33,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-
-    return queryInterface.bulkDelete('Users', null, {})
-
+    return queryInterface.bulkDelete('messages', null, {})
   }
 };
