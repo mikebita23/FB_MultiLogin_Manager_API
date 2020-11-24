@@ -19,8 +19,8 @@ router.get('/', (req, res) => {
 
 router.get('/all', Controller.getMessages)
 router.get('/:id', Controller.getMessage)
-router.get('/:id/del', Controller.deleteMessage)
-
+router.get('/del/:id', Controller.deleteMessage)
+router.post('/add', Controller.addMessage)
 
 
 

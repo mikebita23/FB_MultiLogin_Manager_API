@@ -72,9 +72,36 @@ function deleteMessage(req, res){
     });
 }
 
+function addMessage(req, res){
+    if(Hlp.hasAllParams(req.body, ['Object', 'Content'])){
+
+        Models.Message.create(
+            {
+                Object: req.body.Object,
+                Content: req.body.Content,
+                senderId: req.userData.userId
+            }
+        ).then(result =>{
+            res.status(201).json({
+                message: "Message added Successfully ! ",
+                message: result
+            })
+        }).catch(err =>{
+            res.status(201).json({
+                message: "Something went Wrong !",
+                error: err
+            })
+        });
+    }else{
+        res.status(400).json({
+            message: "BAD REQUEST : Not enough parameters !"
+        })
+    }
+}
 
 module.exports = {
     getMessages: getMessages,
     getMessage: getMessage,
-    deleteMessage: deleteMessage
+    deleteMessage: deleteMessage,
+    addMessage: addMessage
 }
