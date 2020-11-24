@@ -17,5 +17,11 @@ router.get('/', (req, res) => {
     res.send('Wassuuuuup ! ')
 })
 
+router.get('/all', Controller.getMessages)
+router.get('/:id', Controller.getMessage)
+router.get('/:id/del', Controller.deleteMessage)
+
+
+
 
 module.exports = router
