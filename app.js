@@ -12,12 +12,9 @@ const app = Express();
 app.use(BodyParsser.json());
 
 //ROUTES
-app.get('/', (req, res)=> { res.send(`
-
-        <h1>The app is on</h1>
-        <h2><Strong style="color: red;">The Authentification is Activated</strong></h2>
-
-`) });
+app.get('/', (req, res)=> {
+        res.sendFile('views/index.html', {root: __dirname })
+ });
 app.use('/users', Routes.Users);
 app.use('/Msg', Routes.Messages)
 

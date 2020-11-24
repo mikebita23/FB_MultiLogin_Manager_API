@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="jumbotron">
+        <div class="container">
+            <h1>The app is ON :=)</h1>
+            <br><br>
+            <h2>The current functionalities <span class="badge badge-light">(All transactions are in JSON)</span> :</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h2>Authentification :</h2>
+                    <ul>
+                        <li>
+                            To login send a POST request to <div class="btn btn-outline-primary">/users/login</div>
+                            <p>Data to send : </p>
+                            <pre>
+            {
+                "email": "nidal@gmail.com",
+                "passWord": "nidal321"
+            }
+                            </pre>
+                            <p>Return a Bearer Token</p>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <h2>Users :</h2>
+                    <ul>
+                        <li>
+                            User Data format :
+                            <pre>
+            {
+                "firstName":"Jhon",
+                "lastName":"Parker",
+                "email":"Hunter_Bauch40@gmail.com",
+                "phoneNumber":"0762612642",
+                "passWord":"123456",
+                "role":null,
+                "forfaitId":null
+            }
+                            </pre>
+                        </li>
+                        <li>
+                            You can fetch Users with GET request to <div class="btn btn-primary btn-sm">/users/all</div> or one user to <div class="btn btn-primary btn-sm">/users/'id'</div>
+                        </li>
+                        <br>
+                        <li>
+                            For creating a User send a User in POST request to <div class="btn btn-success btn-sm">/users/add</div>
+                        </li>
+                        <br>
+                        <li>
+                            To Update a User send a User in PATCH request to <div class="btn btn-warning btn-sm">/users/edit/'id'</div> ( the id shold be in the link )
+                        </li>
+                        <br>
+                        <li>
+                            For Delete send a GET request to <div class="btn btn-danger btn-sm">/users/remove/'id'</div> ( the id shold be in the link )
+                        </li>
+                        <br>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
