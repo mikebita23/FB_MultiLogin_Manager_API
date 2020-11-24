@@ -12,26 +12,46 @@
         <div class="container">
             <h1>The app is ON :=)</h1>
             <br><br>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Inital instalation</h5>
+                    <p class="card-text"> after Clonning the project and creating database execute these commands :</p>
+                    <pre>
+            -- npm install -g --save bcrypt sequelize-cli
+            -- npm install
+            -- sequelize db:merge
+            -- sequelize db:seed:all
+            -- npm start                        
+                    </pre>
+                </div>
+            </div>
+            <br>
             <h2>The current functionalities <span class="badge badge-light">(All transactions are in JSON)</span> :</h2>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <h2>Authentification :</h2>
-                    <ul>
-                        <li>
-                            To login send a POST request to <div class="btn btn-outline-primary">/users/login</div>
-                            <p>Data to send : </p>
-                            <pre>
-            {
-                "email": "nidal@gmail.com",
-                "passWord": "nidal321"
-            }
-                            </pre>
-                            <p>Return a Bearer Token</p>
-                        </li>
-                    </ul>
-                </li>
-                <li class="list-group-item">
-                    <h2>Users :</h2>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Authentification :</h2>
+                    <p class="card-text">
+                        <ul>
+                            <li>
+                                To login send a POST request to <div class="btn btn-outline-primary">/users/login</div>
+                                <p>Data to send : </p>
+                                <pre>
+                {
+                    "email": "nidal@gmail.com",
+                    "passWord": "nidal321"
+                }
+                                </pre>
+                                <p>Return a Bearer Token</p>
+                            </li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Users :</h2>
                     <ul>
                         <li>
                             User Data format :
@@ -65,8 +85,8 @@
                         <br>
                         
                     </ul>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </div>
     
