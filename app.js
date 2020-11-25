@@ -18,9 +18,10 @@ app.get('/', (req, res)=> {
 app.use('/users', Routes.Users);
 app.use('/Msg', Routes.Messages);
 app.use('/forf', Routes.Forfaits);
+app.use('/Auth', Routes.Auth)
 
 // START LISTENING
-app.listen(process.env.LISTEN_PORT || 3003
+app.listen(process.env.LISTEN_PORT || 3004
         , function() {
  
         console.log('Server lancé:)');
