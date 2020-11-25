@@ -1,5 +1,6 @@
 {
     "env" : {
-        "JWT_KEY" : "secret"
+        "JWT_KEY" : "secret",
+        "LISTEN_PORT": 3004
     }
 }

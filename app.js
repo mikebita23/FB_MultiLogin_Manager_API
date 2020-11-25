@@ -17,15 +17,11 @@ app.get('/', (req, res)=> {
  });
 app.use('/users', Routes.Users);
 app.use('/Msg', Routes.Messages);
-<<<<<<< HEAD
 app.use('/forf', Routes.Forfaits);
-=======
 app.use('/Auth', Routes.Auth)
->>>>>>> 249fcbcac4779b7ef5d7f5ee6f7e0d446db06472
 
 // START LISTENING
-app.listen(process.env.LISTEN_PORT || 3004
-        , function() {
+app.listen(process.env.LISTEN_PORT || 3003, function() {
  
         console.log('Server lancé:)');
     });
