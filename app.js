@@ -16,7 +16,12 @@ app.get('/', (req, res)=> {
         res.sendFile('views/index.html', {root: __dirname })
  });
 app.use('/users', Routes.Users);
-app.use('/Msg', Routes.Messages)
+app.use('/Msg', Routes.Messages);
+app.use('/forf', Routes.Forfaits);
 
 // START LISTENING
-app.listen(process.env.LISTEN_PORT || 3003);
+app.listen(process.env.LISTEN_PORT || 3004
+        , function() {
+ 
+        console.log('Server lancé:)');
+    });
