@@ -16,7 +16,8 @@ app.get('/', (req, res)=> {
         res.sendFile('views/index.html', {root: __dirname })
  });
 app.use('/users', Routes.Users);
-app.use('/Msg', Routes.Messages)
+app.use('/Msg', Routes.Messages);
+app.use('/Auth', Routes.Auth)
 
 // START LISTENING
 app.listen(process.env.LISTEN_PORT || 3003);

@@ -5,8 +5,6 @@ function checkAuth(req, res, next) {
         const Token = req.headers.authorization.split(" ")[1];
         const decodedToken = jwt.verify(Token, process.env.JWT_KEY);
         req.userData = decodedToken;
-        console.log(req.userData);
-        console.log(new Date().getTime() / 1000);
         if(req.userData.exp > new Date().getTime() / 1000 )
             next();
         
