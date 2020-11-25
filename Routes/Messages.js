@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const Controller = require('../controllers/message.controller')
 const UsrMiddleWare = require('../middleWares/userMiddleWare')
 
@@ -12,10 +11,6 @@ router.use( (req, res, next) => {
         })
     else next()
 });
-
-router.get('/', (req, res) => {
-    res.send('Wassuuuuup ! ')
-})
 
 router.get('/all', Controller.getMessages)
 router.get('/:id', Controller.getMessage)

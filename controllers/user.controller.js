@@ -1,8 +1,8 @@
 const Models = require('../models');
-const jwt = require('jsonwebtoken');
 const Bycrpt = require('bcrypt');
 const Hlp = require('../helpers/userHelpers')
 const secret = process.env.JWT_KEY
+
 
 function getUsers(req, res) {
     Models.User.findAll().then((Result) => {
@@ -127,6 +127,7 @@ function updateUser(req, res) {
 
 }
 
+
 function signUp(req, res) {
 
     let user = Hlp.fetchUserFromRequest(req.body)
@@ -176,64 +177,10 @@ function signUp(req, res) {
     });
 }
 
-function logIn(req, res) {
-
-    if(!Hlp.hasAllParams(req.body, ['email', 'passWord'])){
-        return res.status(400).json({
-            message: "BAD REQUEST: not enugh parameters!"
-        })
-    }
-
-    Models.User.findOne({
-        where: { email: req.body.email }
-    }).then(user => {
-        if(user != null) {
-            Bycrpt.compare(req.body.passWord, user.passWord, (err, result) => {
-                if (result) {
-                    let date = new Date()
-                    const Token = jwt.sign({
-                        email: user.email,
-                        userId: user.id,
-                        isAdmin: user.role == 'ADMIN'
-                    }, 
-                    secret,
-                    {
-                        expiresIn: '1h'
-                    },
-                    (err, token) => {
-                        console.log(token);
-                        res.status(200).json({
-                            message: "Authentification Successfull !",
-                            token: token
-                        })
-                    });
-                }else{
-                res.status(401).json({
-                    message: "Authentifiaction Error !",
-                    err: "Invalid Password !"
-                }); 
-                }
-            });
-        }else{
-            res.status(401).json({
-                message: "Authentifiaction Error !",
-                err: "Invalid Email !"
-            });
-        }
-        
-    }).catch(err => {
-        res.status(500).json({
-            message: "Something went wrong",
-            error: err
-        })
-    })
-}
-
 module.exports = {
     getUsers: getUsers,
     getUser: getUser,
     deleteUser: deleteUser,
     addUser: signUp,
-    editUser: updateUser,
-    logIn: logIn
+    editUser: updateUser
 }

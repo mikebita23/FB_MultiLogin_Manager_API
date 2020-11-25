@@ -94,7 +94,6 @@ function fetchForfaitFromRequest(body) {
 
 function decodeToken(Token){
     try {
-        console.log("####### ", process.env.JWT_KEY, " #########");
         const decodedToken = jwt.verify(Token, process.env.JWT_KEY);
         return decodedToken;
     } catch (error) {
