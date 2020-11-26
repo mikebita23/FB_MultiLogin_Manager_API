@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const Controller = require('../controllers/message.controller')
-const UsrMiddleWare = require('../middleWares/userMiddleWare')
+const Controller = require(__controllers + 'message.controller')
+const UsrMiddleWare = require(__middleWares + 'userMiddleWare')
 
 router.use(UsrMiddleWare.checkAuth);
 

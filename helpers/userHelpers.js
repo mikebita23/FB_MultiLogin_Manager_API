@@ -1,5 +1,5 @@
 const validator = require('fastest-validator');
-const Models = require('../models');
+const Models = require(__models);
 
 function ValidateUserFormat(User) {
     

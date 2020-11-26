@@ -1,7 +1,7 @@
-const Models = require('../models');
+const Models = require(__models);
 const jwt = require('jsonwebtoken');
 const Bycrpt = require('bcrypt');
-const Hlp = require('../helpers/userHelpers');
+const Hlp = require(__helpers + 'userHelpers');
 const secret = process.env.JWT_KEY
 
 

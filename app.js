@@ -1,11 +1,12 @@
-
-global.__basedir = __dirname
+//Create Dirs
+global.__baseDir = __dirname;
+require('./Routes/Dirs');
 
 // IMPORTS 
 require('dotenv/config');
 const Express = require('express');
 const BodyParsser = require('body-parser');
-const Routes = require('./Routes/Routes');
+const Routes = require(__Routes + 'Routes');
 
 // INSTANCING THE SERVER
 const app = Express();
@@ -15,7 +16,7 @@ app.use(BodyParsser.json());
 
 //ROUTES
 app.get('/', (req, res)=> {
-        res.sendFile('views/index.html', {root: __dirname })
+        res.sendFile(__views + 'index.html')
  });
 app.use('/users', Routes.Users);
 app.use('/Msg', Routes.Messages);

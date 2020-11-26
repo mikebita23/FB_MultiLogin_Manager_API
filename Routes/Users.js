@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const Controller = require('../controllers/user.controller')
-const CheckAuthMiddleWare= require('../middleWares/userMiddleWare')
+const Controller = require(__controllers + 'user.controller')
+const CheckAuthMiddleWare= require(__middleWares + 'userMiddleWare')
 
 router.get('/all', CheckAuthMiddleWare.checkAuth, (req, res) => {
     Controller.getUsers(req, res);
