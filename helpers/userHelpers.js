@@ -1,5 +1,5 @@
 const validator = require('fastest-validator');
-const Models = require(__models);
+const jwt = require('jsonwebtoken')
 
 function ValidateUserFormat(User) {
     

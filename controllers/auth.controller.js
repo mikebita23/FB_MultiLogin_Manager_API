@@ -19,7 +19,6 @@ function logIn(req, res) {
         if(user != null) {
             Bycrpt.compare(req.body.passWord, user.passWord, (err, result) => {
                 if (result) {
-                    let date = new Date()
                     const Token = jwt.sign({
                         email: user.email,
                         userId: user.id,
