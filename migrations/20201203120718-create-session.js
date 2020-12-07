@@ -1,27 +1,42 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('forfaits', {
+    await queryInterface.createTable('Sessions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      nom: {
+      nom_session: {
         type: Sequelize.STRING
       },
-      prix: {
-        type: Sequelize.FLOAT
+      
+      nom_luminati: {
+        type: Sequelize.STRING
       },
-      description: {
+      proxy_luminati: {
         type: Sequelize.TEXT
       },
-      senderId: {
-        allowNull: false,
+      port_luminati: {
+        type: Sequelize.TEXT
+      },
+      status: {
         type: Sequelize.INTEGER
       },
-      
+     forfaitId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      isBlocked: {
+        type: Sequelize.BOOLEAN,
+        
+      },
+    
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -33,6 +48,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('forfaits');
+    await queryInterface.dropTable('Sessions');
   }
 };

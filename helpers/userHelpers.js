@@ -90,6 +90,28 @@ function fetchForfaitFromRequest(body) {
     }
     else return undefined
 }
+function fetchSessionFromRequest(body) {
+    if(hasAllParams(body, ['nom_session', 'nom_luminati','proxy_luminati','port_luminati','status','owner'] )){
+        return {
+                nom_session: body.nom_session,
+                nom_luminati:body.nom_luminati,
+                proxy_luminati:body.proxy_luminati,
+                port_luminati:body.port_luminati,
+                status:body.status,
+                owner:body.owner
+        }
+    }
+    else return undefined
+}
+function fetchSessionFromRequest(body) {
+    if(hasAllParams(body, ['nom'] )){
+        return {
+            nom: body.nom,
+            
+        }
+    }
+    else return undefined
+}
 
 
 function decodeToken(Token){
