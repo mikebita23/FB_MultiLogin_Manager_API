@@ -22,8 +22,8 @@ app.use('/users', Routes.Users);
 app.use('/Msg', Routes.Messages);
 app.use('/forf', Routes.Forfaits);
 app.use('/session', Routes.Session)
-// app.use('/signaler', Routes.Signalers)
-app.use('/prospect', Routes.Prospect)
+app.use('/prospect', Routes.Prospect);
+//app.use('/paiement', Routes.PaiementPaypal)
 
 
 
@@ -69,12 +69,6 @@ app.get('/error', (req, res)=>{
         res.send('Paiement Annulé')
 })
 
-// START LISTENING
-app.listen(process.env.LISTEN_PORT || 3004
-        , function() {
- 
-        console.log('Server lancé:)');
-    });
 function paiement(req, res){
 
         paypal.configure({
@@ -128,5 +122,13 @@ function paiement(req, res){
                 }
             });
 }
+
+
+// START LISTENING
+app.listen(process.env.LISTEN_PORT || 3004
+        , function() {
+ 
+        console.log('Server lancé:)');
+    });
 
 
