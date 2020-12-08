@@ -17,11 +17,11 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      senderId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      
+      // senderId: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER
+      // },
+          
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

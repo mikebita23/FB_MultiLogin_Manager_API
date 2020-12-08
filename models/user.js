@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
        
       })
       this.belongsTo(models.Forfait,{ // Un et et un seul 
-        foreignKey: 'forfaitId'
+        foreignKey: 'forfaitId' 
       })
 
 
