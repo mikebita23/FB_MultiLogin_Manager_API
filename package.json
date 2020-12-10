@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://gitlab.com/N0k3r/fb_multilogin_manager/issues"
   },
-  "homepage": "https://gitlab.com/N0k3r/fb_multilogin_manager#readme",
+  "homepage": "https://gitlab.com/N0k3r/fb_multilogin_manager/views/index.html",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
