@@ -27,9 +27,9 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.6",
+    "pg": "^8.5.1",
     "sequelize": "^6.3.5",
-    "sequelize-cli": "^6.2.0",
-    "pg": "^8.5.1"
+    "sequelize-cli": "^6.2.0"
   },
   "engines": {
     "node": "12.18.0",
