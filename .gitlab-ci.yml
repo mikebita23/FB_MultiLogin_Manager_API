@@ -10,8 +10,6 @@ production:
   script:
     - apt-get update -qy
     - apt-get install -y ruby-dev
-    - npm install -g --save bcrypt sequelize-cli mysql2
-    - npm install 
     - gem install dpl
     - dpl --provider=heroku --app=gls-api --api-key=$HEROKU_API_KEY
   only:
