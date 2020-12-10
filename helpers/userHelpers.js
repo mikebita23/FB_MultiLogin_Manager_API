@@ -1,5 +1,5 @@
 const validator = require('fastest-validator');
-const Models = require('../models');
+const jwt = require('jsonwebtoken')
 
 function ValidateUserFormat(User) {
     
@@ -40,6 +40,31 @@ function ValidateUserFormat(User) {
     return Validator.validate(User, schema);
 }
 
+function ValidateForfaitFormat(Forfait) {
+    
+    let Validator = new validator()
+
+    let schema = {
+        nom: {
+            type: "string",
+            max: 20
+        },
+        prix: {
+            type: "number",
+            
+        },
+       
+       
+        description: {
+            type: "string",
+            max: 1000
+        },
+      
+    }
+
+    return Validator.validate(Forfait, schema);
+}
+
 function fetchUserFromRequest(body) {
     if(hasAllParams(body, ['firstName', 'lastName', 'email', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'] )){
         return {
@@ -55,9 +80,20 @@ function fetchUserFromRequest(body) {
     else return undefined
 }
 
+function fetchForfaitFromRequest(body) {
+    if(hasAllParams(body, ['nom', 'prix', 'description'] )){
+        return {
+            nom: body.nom,
+            prix: body.prix,
+            description: body.description,
+        }
+    }
+    else return undefined
+}
+
+
 function decodeToken(Token){
     try {
-        console.log("####### ", process.env.JWT_KEY, " #########");
         const decodedToken = jwt.verify(Token, process.env.JWT_KEY);
         return decodedToken;
     } catch (error) {
@@ -75,7 +111,9 @@ function hasAllParams(req, params) {
 
 module.exports = {
     ValidateUserFormat: ValidateUserFormat,
+    ValidateForfaitFormat:ValidateForfaitFormat,
     fetchUserFromRequest: fetchUserFromRequest,
+    fetchForfaitFromRequest:fetchForfaitFromRequest,
     hasAllParams: hasAllParams,
     decodeToken: decodeToken
 }

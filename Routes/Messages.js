@@ -1,7 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const Controller = require('../controllers/message.controller')
-const UsrMiddleWare = require('../middleWares/userMiddleWare')
+const router = require('express').Router();
+const Controller = require(__controllers + 'message.controller')
+const UsrMiddleWare = require(__middleWares + 'userMiddleWare')
 
 router.use(UsrMiddleWare.checkAuth);
 
@@ -12,10 +11,6 @@ router.use( (req, res, next) => {
         })
     else next()
 });
-
-router.get('/', (req, res) => {
-    res.send('Wassuuuuup ! ')
-})
 
 router.get('/all', Controller.getMessages)
 router.get('/:id', Controller.getMessage)

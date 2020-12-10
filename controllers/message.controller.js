@@ -1,5 +1,5 @@
-const Models = require('../models');
-const Hlp = require('../helpers/userHelpers');
+const Models = require(__models);
+const Hlp = require(__helpers + 'userHelpers');
 
 function getMessages(req, res) {
     Models.Message.findAll().then((result) => {

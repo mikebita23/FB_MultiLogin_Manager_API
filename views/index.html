@@ -41,7 +41,7 @@
                             <p class="card-text">
                                 <ul>
                                     <li>
-                                        To login send a POST request to <div class="btn btn-outline-primary">/users/login</div>
+                                        To login send a POST request to <div class="btn btn-outline-primary">/Auth/login</div>
                                         <p>Data to send : </p>
                                         <pre>
                         {
@@ -136,6 +136,48 @@
                     </div>
                     
                 </div>
+                <br>
+                <div class="card">
+                    <div class="card-header" id="Forf">
+                        <h2 data-toggle="collapse" data-target="#ForfCol"  aria-controls="ForfCol">Forfaits :</h2>
+                    </div>
+                    <div id="ForfCol" class="collapse show" aria-labelledby="Forf" data-parent="#accordion">
+                        <div class="card-body">
+                            <ul>
+                                <li>
+                                    Forfaits Data format :
+                                    <pre>
+                    {
+                        "nom": "nom",
+                        "prix": "prix",
+                        "description": "description",
+                    }
+                                    </pre>
+                                </li>
+                                <li>
+                                    You can fetch Forfait with GET request to <div class="btn btn-primary btn-sm">/forf/all</div> or one Forfait to <div class="btn btn-primary btn-sm">/forf/'id'</div>
+                                </li>
+                                <br>
+                                
+                                <li>
+                                    For adding a Forfait send a forfait in POST request to <div class="btn btn-success btn-sm">/forf/add</div>
+                                </li>
+                                <br>
+                                <li>
+                                    For Deleting send a GET request to <div class="btn btn-danger btn-sm">/forf/del/'id'</div> ( the id shold be in the link )
+                                </li>
+                                <br>
+                                <li>
+                                    For Edit send a Forfait in PATCH request to <div class="btn btn-warning btn-sm">/forf/'id'/edit</div> ( the id shold be in the link )
+                                </li>
+                                <br>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+
             </div>
             <br>
             
