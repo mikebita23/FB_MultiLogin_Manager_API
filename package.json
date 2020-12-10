@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://gitlab.com/N0k3r/fb_multilogin_manager/issues"
   },
-  "homepage": "https://gitlab.com/N0k3r/fb_multilogin_manager#readme",
+  "homepage": "https://gitlab.com/N0k3r/fb_multilogin_manager/views/index.html",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
@@ -27,7 +27,9 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.6",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0",
+    "pg": "^8.5.1"
   },
   "engines": {
     "node": "12.18.0",
