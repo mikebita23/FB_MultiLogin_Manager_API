@@ -1,4 +1,3 @@
-
 // IMPORTS 
 require('dotenv/config');
 const Express = require('express');
@@ -19,4 +18,4 @@ app.use('/users', Routes.Users);
 app.use('/Msg', Routes.Messages)
 
 // START LISTENING
-app.listen(process.env.LISTEN_PORT || 3003);
+app.listen(process.env.PORT  || 3003);
