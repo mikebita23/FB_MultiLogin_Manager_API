@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="scriptsAjax.js" defer></script>
 </head>
 <body>
     
@@ -183,18 +185,31 @@
             
         </div>
     </div>
-    <div>
-        <h1> Paiement avec Paypal</h1>
-        <h3>Objet XXXXX 1.00</h3>
-        <form action="/paiement" method="POST">
-        <input type="hidden"  name="price" value="1.00">
-        <input type="submit">
-
+    <fieldset>
+        <legend>Formulaire Message</legend>
+        <form>
+            <div>
+                <label>Objet</label>
+                <input type="text" id="objet">
+            </div>
+            <div>
+                <label>Contenu</label>
+                <input type="text" id="contenu">
+            </div>
+            <div>
+                <label>UserId</label>
+                <input type="text" id="userId">
+            </div>
+            <div>
+                <button type="button" id="sendBtn">Envoyer</button>
+                 <button type="button" id="getBtn">Recevoir</button>
+            </div>
         </form>
-       
-
-
-</div>
+        </fieldset>
+        <fieldset>
+            <legend>Resulat</legend>
+            <div id="resul" style="word-wrap:break-word; white-space:pre-wrap;"></div>
+        </fieldset>
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

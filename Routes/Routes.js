@@ -5,7 +5,7 @@ const SessionsRoute =require('./Sessions');
 // const SignalerRoute =require('./Signaler');
 const Auth = require('./Auth');
 const Prospect=require('./Prospect');
-//const PaiementPaypal=require('./PaiementPaypal')
+//const PaiementPaypal = require('./PaiementPaypal')
 
 
 

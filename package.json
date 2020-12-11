@@ -26,9 +26,11 @@
     "faker": "^5.1.0",
     "fastest-validator": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
+    "live": "^0.1.25-beta.0",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.6",
     "paypal-rest-sdk": "^1.8.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "server": "^1.0.31"
   }
 }

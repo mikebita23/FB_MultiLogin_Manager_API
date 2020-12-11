@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Controller = require('../controllers/forfait.controller')
+const Controller = require('../controllers/paiementPaypal.controller')
 const UsrMiddleWare = require('../middleWares/userMiddleWare')
 
 
@@ -21,7 +21,7 @@ const UsrMiddleWare = require('../middleWares/userMiddleWare')
 // });
 
 router.get('/success', Controller.success)
-router.post('/paiement', Controller.paiement)
+router.post('/payer', Controller.paiement)
 
 
 
