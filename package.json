@@ -1,7 +1,6 @@
 {
   "name": "fb_multilogin_manager_service",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "initInstall": "npm i -g bcrypt && npm i",
@@ -32,5 +31,7 @@
     "paypal-rest-sdk": "^1.8.1",
     "sequelize": "^6.3.5",
     "server": "^1.0.31"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }

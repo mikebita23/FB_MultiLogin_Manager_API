@@ -2,9 +2,19 @@ let ouput=document.getElementById('resul');
 let sendBtn=document.getElementById('sendBtn');
 let getBtn =document.getElementById('getBtn');
 
+var result= document.querySelector('#result')
+var form =document.querySelector('#resultatform')
 // D'abord installer Live Server : npm install live server
 
 // POUR TESTER LANCER AVEC SERVER LIVE : click droit sur le fichier index.html et choisir Open with live server
+var httpRequest=getHttpRequest();
+
+
+var data =new FormData(form)
+var input1= document.querySelector('#')
+data.append('q', input1.value)
+httpRequest.send(data)
+
 
 //GET Data
 getBtn.addEventListener('click', getData);
@@ -37,7 +47,7 @@ function getData(ev){
         }
     }
 
-    request('GET','http://localhost:3004/session/all', stateChange );
+    request('GET','https://jsonplaceholder.typicode.com/posts', stateChange );
 
 
     console.log('get Data');
@@ -61,6 +71,7 @@ function sendData(ev){
 
           if(xhr.status>=200 && xhr.status<300){
             ouput.textContent =xhr.responseText;
+            JSON.parse(ouput.textContent)
 
           }
           else if(xhr.status>=400 && xhr.status <600){
@@ -71,9 +82,16 @@ function sendData(ev){
         else if(xhr.readyState==XMLHttpRequest.OPENED){
             ouput.textContent ="open..;";
         }
+
+        
+
+
     }
 
 // Creation de l'objet à envoyer 
+
+
+
      let obj={
         Object: 'Renseignement',
         Content: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
@@ -103,6 +121,7 @@ function request(method, url, onreadystatechange= function(){}, data={}, content
  try{
      xhr.open(method, url);
      xhr.setRequestHeader('Content-type', contentType || 'application/json' );
+     // xhr.setRequestHeader("Access-Control-Allow-Origin:*");
 
      xhr.send(data);
 

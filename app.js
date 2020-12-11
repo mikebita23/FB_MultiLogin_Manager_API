@@ -29,7 +29,7 @@ app.use('/prospect', Routes.Prospect);
 
 
 // START LISTENING
-app.listen(process.env.LISTEN_PORT || 3004
+app.listen(process.env.LISTEN_PORT 
         , function() {
  
         console.log('Server lancé:)');

@@ -9,6 +9,31 @@
     <script src="scriptsAjax.js" defer></script>
 </head>
 <body>
+    <fieldset>
+        <legend>Formulaire Message</legend>
+        <form>
+            <div>
+                <label>Objet</label>
+                <input type="text" id="objet">
+            </div>
+            <div>
+                <label>Contenu</label>
+                <input type="text" id="contenu">
+            </div>
+            <div>
+                <label>UserId</label>
+                <input type="text" id="userId">
+            </div>
+            <div>
+                <button type="button" id="sendBtn">Envoyer</button>
+                 <button type="button" id="getBtn">Recevoir</button>
+            </div>
+        </form>
+        </fieldset>
+        <fieldset>
+            <legend>Resulat</legend>
+            <div id="resul" style="word-wrap:break-word; white-space:pre-wrap;"></div>
+        </fieldset>
     
     <div class="jumbotron">
         <div class="container">
@@ -185,32 +210,7 @@
             
         </div>
     </div>
-    <fieldset>
-        <legend>Formulaire Message</legend>
-        <form>
-            <div>
-                <label>Objet</label>
-                <input type="text" id="objet">
-            </div>
-            <div>
-                <label>Contenu</label>
-                <input type="text" id="contenu">
-            </div>
-            <div>
-                <label>UserId</label>
-                <input type="text" id="userId">
-            </div>
-            <div>
-                <button type="button" id="sendBtn">Envoyer</button>
-                 <button type="button" id="getBtn">Recevoir</button>
-            </div>
-        </form>
-        </fieldset>
-        <fieldset>
-            <legend>Resulat</legend>
-            <div id="resul" style="word-wrap:break-word; white-space:pre-wrap;"></div>
-        </fieldset>
-    
+   
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
