@@ -1,6 +1,7 @@
 {
     "env" : {
         "JWT_KEY" : "secret",
-        "LISTEN_PORT": 3004
+        "LISTEN_PORT": 3004,
+        "LUMINATI_PROXY": "http://lum-customer-williamsellier-zone-residential20:lts3a949g9hw@zproxy.lum-superproxy.io:22225"
     }
 }
