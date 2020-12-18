@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "initInstall": "npm i -g bcrypt && npm i",
-    "start": "nodemon -r dotenv/config app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://gitlab.com/N0k3r/fb_multilogin_manager/issues"
   },
-  "homepage": "https://gitlab.com/N0k3r/fb_multilogin_manager#readme",
+  "homepage": "https://gitlab.com/N0k3r/fb_multilogin_manager/views/index.html",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
@@ -28,6 +28,12 @@
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.6",
     "proxy-chain": "^0.4.6",
-    "sequelize": "^6.3.5"
+    "pg": "^8.5.1",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
+  },
+  "engines": {
+    "node": "12.18.0",
+    "npm": "6.14.4"
   }
 }
