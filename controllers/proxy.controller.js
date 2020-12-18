@@ -27,11 +27,20 @@ module.exports = {
         if(index !== -1) {
             __proxyPorts.splice(index, 1);
             __proxyCount-- ;
+            ProxyChain.closeAnonymizedProxy(req.params.port, true);
+            return res.status(200).json({
+                message: "Proxy closed successfully !"
+            })
         }
 
-        ProxyChain.closeAnonymizedProxy(req.params.port, true);
-        return res.status(200).json({
-            message: "Proxy closed successfully !"
+        res.status(401).json({
+            message: "Proxy not found !"
+        })
+    },
+    getOpenPorts: (req, res)=>{
+        res.status(200).json({
+            count: __proxyCount,
+            ports: __proxyPorts
         })
     }
 }

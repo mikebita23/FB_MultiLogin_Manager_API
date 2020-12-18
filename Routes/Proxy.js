@@ -4,5 +4,6 @@ const CheckAuthMiddleWare= require(__middleWares + 'userMiddleWare')
 
 router.get('/open', Controller.createProxy);
 router.get('/close/:port', Controller.closeProxy);
+router.get('/get',Controller.getOpenPorts)
 
 module.exports = router;
