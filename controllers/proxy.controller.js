@@ -6,10 +6,6 @@ const lumZone = process.env.LUMINATI_ZONE
 const lumPort = process.env.LUMINATI_PORT || 22225
 const lumTkn = process.env.LUMINATI_KEY || '2d79281c3f4fa213797f3730d77feaa5'
 
-setUrl = ()=>{
-    
-}
-
 
 module.exports = {
 
@@ -17,7 +13,7 @@ module.exports = {
         if(lumUser && lumPwd && lumZone)
             rp({
                 url: `https://luminati.io/api/zone/passwords?zone=${lumZone}`,
-                headers: {'Authorization': 'Bearer '}
+                headers: {'Authorization': 'Bearer '+lumTkn}
             }).then( res => {
                 passwords = JSON.parse(data)
                 if(passwords.length > 0)
