@@ -25,12 +25,10 @@ module.exports = (sequelize, DataTypes) => {
   };
   Session.init({
     nom_session: DataTypes.STRING,
-    nom_luminati: DataTypes.STRING,
-    proxy_luminati: DataTypes.STRING,
-    port_luminati: DataTypes.STRING,
+   
     status: DataTypes.INTEGER,
-    isBlocked:DataTypes.BOOLEAN,
-    forfaitId: DataTypes.INTEGER,
+  
+    // forfaitId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
   }, {
     sequelize,

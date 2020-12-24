@@ -14,7 +14,7 @@ app.use(BodyParsser.json());
 
 //ROUTES
 app.get('/', (req, res)=> {
-        res.sendFile('views/testAjax.html', {root: __dirname })
+        res.sendFile('views/index.html', {root: __dirname })
  });
  
     

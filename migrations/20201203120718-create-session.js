@@ -12,15 +12,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       
-      nom_luminati: {
-        type: Sequelize.STRING
-      },
-      proxy_luminati: {
-        type: Sequelize.TEXT
-      },
-      port_luminati: {
-        type: Sequelize.TEXT
-      },
       status: {
         type: Sequelize.INTEGER
       },
@@ -32,11 +23,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      isBlocked: {
-        type: Sequelize.BOOLEAN,
-        
-      },
-    
+      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

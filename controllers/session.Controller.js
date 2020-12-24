@@ -75,21 +75,15 @@ function deleteSession(req, res){
 
 function addSession(req, res){
 
-    if(Hlp.hasAllParams(req.body, ['nom_session', 'nom_luminati','proxy_luminati','port_luminati','status','userId' ])){
+    if(Hlp.hasAllParams(req.body, ['nom_session','status','userId' ])){
 
         Models.Session.create(
             {
                 nom_session: req.body.nom_session,
-                nom_luminati:req.body.nom_luminati,
-                proxy_luminati:req.body.proxy_luminati,
-                port_luminati:req.body.port_luminati,
                 status:req.body.status,
-
-                forfaitId:req.body.forfaitId,
                 userId:req.body.userId,
-
-              
-                        }
+                //forfaitId:req.body.forfaitId,
+                  }
         ).then(result =>{
             res.status(201).json({
                 message: "Session added Successfully ! ",

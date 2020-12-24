@@ -6,23 +6,31 @@
     <title>Documentation</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="scriptsAjax.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script type="text/javascript" src="./ap.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+  
+     
 </head>
-<body>
+<body ng-app="MyApp" ng-controller="MyController">
+  
     <fieldset>
         <legend>Formulaire Message</legend>
         <form>
             <div>
                 <label>Objet</label>
-                <input type="text" id="objet">
+                <input type="text" name="objet" id="objet">
             </div>
             <div>
                 <label>Contenu</label>
-                <input type="text" id="contenu">
+                <input type="text" name="contenu" id="contenu">
             </div>
             <div>
                 <label>UserId</label>
-                <input type="text" id="userId">
+                <input type="text"  name="userId" id="userId">
             </div>
             <div>
                 <button type="button" id="sendBtn">Envoyer</button>

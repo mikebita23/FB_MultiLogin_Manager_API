@@ -11,8 +11,8 @@ var httpRequest=getHttpRequest();
 
 
 var data =new FormData(form)
-var input1= document.querySelector('#')
-data.append('q', input1.value)
+var input1= document.querySelector('#objet')
+data.append('objet', input1.value)
 httpRequest.send(data)
 
 
