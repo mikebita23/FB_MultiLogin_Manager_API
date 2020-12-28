@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT
   }, {
     sequelize,
-    modelName: 'forfaits',
+    modelName: 'forfait',
   });
   return Forfait;
 };

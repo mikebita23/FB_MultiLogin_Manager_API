@@ -2,6 +2,7 @@ const Models = require(__models);
 const Hlp = require(__helpers + 'userHelpers');
 
 function getForfaits(req, res) {
+    console.log(Models);
     Models.forfait.findAll().then((result) => {
         res.status(200).json(result)
     }).catch((Err) => {
