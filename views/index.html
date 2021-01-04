@@ -12,23 +12,10 @@
         <div class="container">
             <h1>The app is ON :=)</h1>
             <br><br>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Inital instalation</h5>
-                    <p class="card-text"> after Clonning the project and creating database execute these commands :</p>
-                    <pre>
-            -- npm install -g --save bcrypt sequelize-cli
-            -- npm install
-            -- sequelize db:merge
-            -- sequelize db:seed:all
-            -- npm start                        
-                    </pre>
-                </div>
-            </div>
             <br>
             <h2>The current functionalities <span class="badge badge-light">(All transactions are in JSON)</span> :</h2>
             <br>
-
+            <br>
             <div id="accordion">
                 <div class="card">
                     <div class="card-header" id="Auth">
@@ -88,7 +75,7 @@
                                 </li>
                                 <br>
                                 <li>
-                                    To Update a User send a User in PATCH request to <div class="btn btn-warning btn-sm">/users/edit/'id'</div> ( the id shold be in the link )
+                                    To Update a User send a User in POST request to <div class="btn btn-warning btn-sm">/users/edit</div> ( You can send only the new attributes )
                                 </li>
                                 <br>
                                 <li>
@@ -138,37 +125,44 @@
                 </div>
                 <br>
                 <div class="card">
-                    <div class="card-header" id="Forf">
-                        <h2 data-toggle="collapse" data-target="#ForfCol"  aria-controls="ForfCol">Forfaits :</h2>
+                    <div class="card-header" id="Prox">
+                        <h2 data-toggle="collapse" data-target="#ProxCol"  aria-controls="ProxCol">Proxy :</h2>
                     </div>
-                    <div id="ForfCol" class="collapse show" aria-labelledby="Forf" data-parent="#accordion">
+                    <div id="ProxCol" class="collapse show" aria-labelledby="Prox" data-parent="#accordion">
                         <div class="card-body">
                             <ul>
                                 <li>
-                                    Forfaits Data format :
+                                    Proxy Data format :
                                     <pre>
-                    {
-                        "nom": "nom",
-                        "prix": "prix",
-                        "description": "description",
-                    }
+                {
+                    url: 'http://lum-customer-{lumUser}-zone-{lumZone}:{password}@zproxy.lum-superproxy.io:{lumPort}'
+                }
                                     </pre>
                                 </li>
                                 <li>
-                                    You can fetch Forfait with GET request to <div class="btn btn-primary btn-sm">/forf/all</div> or one Forfait to <div class="btn btn-primary btn-sm">/forf/'id'</div>
+                                    You can fetch Proxy with GET request to <div class="btn btn-primary btn-sm">/proxy/get</div>
                                 </li>
                                 <br>
                                 
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header" id="Dwn">
+                        <h2 data-toggle="collapse" data-target="#DwnCol"  aria-controls="DwnCol">How to Download :</h2>
+                    </div>
+                    <div id="DwnCol" class="collapse show" aria-labelledby="Dwn" data-parent="#accordion">
+                        <div class="card-body">
+                            <ul>
                                 <li>
-                                    For adding a Forfait send a forfait in POST request to <div class="btn btn-success btn-sm">/forf/add</div>
+                                    You can fetch All versions of the app by sending a Get request to <div class="btn btn-primary btn-sm">/Dwn/get</div>
                                 </li>
                                 <br>
                                 <li>
-                                    For Deleting send a GET request to <div class="btn btn-danger btn-sm">/forf/del/'id'</div> ( the id shold be in the link )
-                                </li>
-                                <br>
-                                <li>
-                                    For Edit send a Forfait in PATCH request to <div class="btn btn-warning btn-sm">/forf/'id'/edit</div> ( the id shold be in the link )
+                                    Once you chosen your version send a GET request to<div class="btn btn-success btn-sm">/Dwn/getLink/'name'</div> to receive a download link
                                 </li>
                                 <br>
                                 
