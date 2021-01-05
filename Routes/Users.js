@@ -14,7 +14,7 @@ router.get('/remove/:id', CheckAuthMiddleWare.checkAuth, (req, res) => {
     Controller.deleteUser(req, res);
 });
 
-router.patch('/edit/:id', CheckAuthMiddleWare.checkAuth, (req, res) => {
+router.post('/edit', CheckAuthMiddleWare.checkAuth, (req, res) => {
     Controller.editUser(req, res)
 });
 

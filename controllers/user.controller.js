@@ -1,7 +1,7 @@
 const Models = require(__models);
-const Bycrpt = require('bcrypt');
-const Hlp = require(__helpers + 'userHelpers')
-const secret = process.env.JWT_KEY
+const userHlp = require(__helpers + 'userHelpers')
+const encrypHlp = require(__helpers + 'encryptHelper')
+const { Op } = require('sequelize')
 
 
 function getUsers(req, res) {
@@ -17,7 +17,7 @@ function getUsers(req, res) {
 
 function getUser(req, res) {
 
-    if(!Hlp.hasAllParams(req.params, ['id'])){
+    if (!userHlp.hasAllParams(req.params, ['id'])) {
         return res.status(400).json({
             message: "BAD REQUEST: 'id' not found !"
         })
@@ -42,7 +42,7 @@ function getUser(req, res) {
 
 function deleteUser(req, res) {
 
-    if(!Hlp.hasAllParams(req.params, ['id'])){
+    if (!userHlp.hasAllParams(req.params, ['id'])) {
         return res.status(400).json({
             message: "BAD REQUEST: 'id' not found !"
         })
@@ -81,58 +81,65 @@ function deleteUser(req, res) {
 
 function updateUser(req, res) {
 
-    let user = Hlp.fetchUserFromRequest(req.body)
+    // checking wich params should be update and fetching it values 
+    let paramsToUpdate = userHlp.wichParams(req.body, ['id', 'firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'])
+    let newValues = userHlp.fetchAttrFromRequest(req.body, paramsToUpdate)
 
-    if(!Hlp.hasAllParams(req.params, ['id']) || typeof user == 'undefined'){
-        return res.status(400).json({
-            message: "BAD REQUEST: not enugh parameters!"
-        })
-    }
-
-    let id = req.params.id
+    // no param verification
+    if (paramsToUpdate.length == 0) return res.status(400).json({ message: "BAD REQUEST: no parameters! to update" });
     
+    // seting up the account to update
+    let id = (paramsToUpdate.indexOf('id') >= 0 && req.userData.isAdmin) ? newValues.id : req.userData.userId;
+    delete newValues.id
+
+    //recovering old data
     Models.User.findOne({
-        where: { id: id }
-    }).then(result => {
-        if (result) {
+        where: {id: id}
+    }).then(oldUser => {
 
-            ValidationResponse = Hlp.ValidateUserFormat(user)
-            if (ValidationResponse !== true) return res.status(400).json({ message: "Invalide Format !", error: ValidationResponse });
+        // checking if user really exist
+        if(oldUser){
+            
+            //verifying if new email is used by someone else
+            if(paramsToUpdate.indexOf('email') >= 0 ){
+                Models.User.findOne({
+                    where: {
+                        email: newValues.email,
+                        id: {
+                            [Op.ne] : id
+                        }
+                    }
+                }).then(user => { if(user) return res.status(401).json({ message: 'Email already exist ' })
+                }).catch(err => { res.status(500).json({ message: "Something Went Wrong !!!", error: err })                })
+            }
 
-            Bycrpt.genSalt(10, (err, salt) => {
-                Bycrpt.hash(result.passWord, salt, (err, hash) => {
-                    user.passWord = hash
-                    Models.User.update(user, { where: { id: id } }).then(result => {
-                        res.status(200).json(result)
-                    }).catch(err => {
-                        res.status(500).json({
-                            message: "Something went wrong",
-                            error: err
-                        })
-                    });
+            // if new passWord it should be hashed
+            if(paramsToUpdate.indexOf('passWord') >= 0 ){
+                encrypHlp.hash(newValues.passWord, 10).then(hash => {
+                    newValues.passWord = hash
+                    Models.User.update(newValues, { where: { id: id } })
+                    .then(result => { return res.status(200).json(result)})
+                    .catch(err => { return res.status(500).json({message: "Something went wrong", error: err})});        
                 })
-            })
+            }else {
+                Models.User.update(newValues, { where: { id: id } })
+                .then(result => { return res.status(200).json(result)})
+                .catch(err => { return res.status(500).json({message: "Something went wrong", error: err})});
+            }               
 
-        } else {
-            res.status(404).json({
-                message: "User Not Found!"
-            })
+        }else {
+            return res.status(404).json({ message: "USER NOT FOUND !!" });
         }
-    }).catch(err => {
-        res.status(500).json({
-            message: "Something went wrong ----",
-            error: err
-        })
-    });
+    }).catch(err => { res.status(500).json({ message: "-Something Went Worong !!!", error: err }) })
 
 }
 
 
 function signUp(req, res) {
 
-    let user = Hlp.fetchUserFromRequest(req.body)
+    let user = userHlp.fetchUserFromRequest(req.body)
 
-    if(typeof user == 'undefined'){
+    if (typeof user == 'undefined') {
         return res.status(400).json({
             message: "BAD REQUEST: not enugh parameters!"
         })
@@ -147,27 +154,26 @@ function signUp(req, res) {
             })
         } else {
 
-            ValidationResponse = Hlp.ValidateUserFormat(user)
+            ValidationResponse = userHlp.ValidateUserFormat(user)
 
             if (ValidationResponse !== true) return res.status(400).json({ message: "Invalide Format !", error: ValidationResponse });
 
-            Bycrpt.genSalt(10, (err, salt) => {
-                Bycrpt.hash(user.passWord, salt, (err, hash) => {
-                    user.passWord = hash
-
-                    Models.User.create(user).then(result => {
-                        res.status(201).json({
-                            message: "User Created Successfully ! ",
-                            user: user
-                        })
-                    }).catch(error => {
-                        res.status(201).json({
-                            message: "Something went Wrong !",
-                            error: error
-                        })
-                    });
-                })
-            });
+            encrypHlp.hash(user.passWord, 10).then(hash => {
+                user.passWord = hash
+                
+                Models.User.create(user).then(result => {
+                    res.status(201).json({
+                        message: "User Created Successfully ! ",
+                        user: user
+                    })
+                }).catch(error => {
+                    res.status(201).json({
+                        message: "Something went Wrong !",
+                        error: error
+                    })
+                });
+            
+            })
         }
     }).catch(err => {
         res.status(500).json({

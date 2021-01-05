@@ -66,7 +66,7 @@ function ValidateForfaitFormat(Forfait) {
 }
 
 function fetchUserFromRequest(body) {
-    if(hasAllParams(body, ['firstName', 'lastName', 'email', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'] )){
+    if(hasAllParams(body, ['firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'] )){
         return {
             firstName: body.firstName,
             lastName: body.lastName,
@@ -78,6 +78,16 @@ function fetchUserFromRequest(body) {
         }
     }
     else return undefined
+}
+
+function fetchAttrFromRequest(body, attr) {
+    let res = {}
+    for (let i = 0; i < attr.length; i++) {
+        if(hasParam(body, attr[i])){
+            res[attr[i]] = body[attr[i]]
+        }
+    }
+    return res
 }
 
 function fetchForfaitFromRequest(body) {
@@ -109,11 +119,27 @@ function hasAllParams(req, params) {
     return true;
 }
 
+function hasParam(req, param) {
+    return typeof req[param] !== 'undefined'
+}
+
+function wichParams(req, params) {
+    let Param = []
+    for (let i = 0; i < params.length; i++) {
+        if(typeof req[params[i]] !== 'undefined')
+            Param.push(params[i])
+    }
+    return Param
+}
+
 module.exports = {
     ValidateUserFormat: ValidateUserFormat,
     ValidateForfaitFormat:ValidateForfaitFormat,
     fetchUserFromRequest: fetchUserFromRequest,
     fetchForfaitFromRequest:fetchForfaitFromRequest,
     hasAllParams: hasAllParams,
-    decodeToken: decodeToken
+    decodeToken: decodeToken,
+    wichParams: wichParams,
+    fetchAttrFromRequest: fetchAttrFromRequest,
+    hasParam: hasParam
 }

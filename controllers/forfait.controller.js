@@ -2,7 +2,8 @@ const Models = require(__models);
 const Hlp = require(__helpers + 'userHelpers');
 
 function getForfaits(req, res) {
-    Models.Forfait.findAll().then((result) => {
+    console.log(Models);
+    Models.forfait.findAll().then((result) => {
         res.status(200).json(result)
     }).catch((Err) => {
         res.status(500).json({
@@ -19,7 +20,7 @@ function getForfait(req, res) {
         })
     }
 
-    Models.Forfait.findByPk(req.params.id).then(result => {
+    Models.forfait.findByPk(req.params.id).then(result => {
         if (result) {
             res.status(200).json(result);
         } else {
@@ -42,9 +43,9 @@ function deleteForfait(req, res) {
         })
     }
 
-    Models.Forfait.findByPk(req.params.id).then(result => {
+    Models.forfait.findByPk(req.params.id).then(result => {
         if (result) {
-            Models.Forfait.destroy(
+            Models.forfait.destroy(
                 {
                     where: { id: req.params.id }
                 }
@@ -77,7 +78,7 @@ function addForfait(req, res) {
 
     if (Hlp.hasAllParams(req.body, ['nom', 'prix', 'description'])) {
 
-        Models.Forfait.create(
+        Models.forfait.create(
             {
                 nom: req.body.nom,
                 prix: req.body.prix,
@@ -112,12 +113,12 @@ function updateForfait(req, res) {
     }
 
     let id = req.params.id
-
-    Models.Forfait.findByPk(id).then(result => {
+    
+    Models.forfait.findByPk(id).then(result => {
         if (result) {
 
-            Models.Forfait.update(forfait, {
-                where: { id: id }
+            Models.forfait.update(forfait, { 
+                where: { id: id } 
             }).then(result => {
                 res.status(200).json(result)
             }).catch(err => {
