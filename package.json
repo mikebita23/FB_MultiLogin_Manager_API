@@ -4,6 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "unit": " mocha --watch --watch-extension js  units_tests/**/*.spec.js",
+    "test": "mocha --watch --watch-extension js test/**/*.spec.js",
     "initInstall": "npm i -g bcrypt && npm i",
     "start": "node app.js",
     "devStart": "nodemon -r dotenv/config app.js"
@@ -38,5 +40,13 @@
     "node": "12.18.0",
     "npm": "6.14.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/chai-http": "^4.2.0",
+    "@types/mocha": "^8.2.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "sinon": "^9.2.2"
+  }
 }

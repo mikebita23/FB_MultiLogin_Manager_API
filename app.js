@@ -29,4 +29,4 @@ app.use('/Dwn', Routes.Download);
 app.use('/proxy', Routes.Proxy)
 
 // START LISTENING
-app.listen(process.env.PORT || 3004);
+module.exports = app.listen(process.env.PORT || 3004);

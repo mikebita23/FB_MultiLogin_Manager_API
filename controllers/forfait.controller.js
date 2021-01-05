@@ -12,8 +12,8 @@ function getForfaits(req, res) {
     });
 }
 
-function getForfait(req, res){
-    if(!Hlp.hasAllParams(req.params, ['id'])){
+function getForfait(req, res) {
+    if (!Hlp.hasAllParams(req.params, ['id'])) {
         return res.status(400).json({
             message: "BAD REQUEST: 'id' not found !"
         })
@@ -35,8 +35,8 @@ function getForfait(req, res){
     });
 }
 
-function deleteForfait(req, res){
-    if(!Hlp.hasAllParams(req.params, ['id'])){
+function deleteForfait(req, res) {
+    if (!Hlp.hasAllParams(req.params, ['id'])) {
         return res.status(400).json({
             message: "BAD REQUEST: 'id' not found !"
         })
@@ -73,28 +73,28 @@ function deleteForfait(req, res){
 }
 
 
-function addForfait(req, res){
+function addForfait(req, res) {
 
-    if(Hlp.hasAllParams(req.body, ['nom', 'prix','description' ])){
+    if (Hlp.hasAllParams(req.body, ['nom', 'prix', 'description'])) {
 
         Models.Forfait.create(
             {
                 nom: req.body.nom,
                 prix: req.body.prix,
                 description: req.body.description
-                        }
-        ).then(result =>{
+            }
+        ).then(result => {
             res.status(201).json({
                 message: "Forfait added Successfully ! ",
                 message: result
             })
-        }).catch(err =>{
+        }).catch(err => {
             res.status(500).json({
                 message: "Something went Wrong !",
                 error: err
             })
         });
-    }else{
+    } else {
         res.status(400).json({
             message: "BAD REQUEST : Not enough parameters !"
         })
@@ -105,19 +105,19 @@ function updateForfait(req, res) {
 
     let forfait = Hlp.fetchForfaitFromRequest(req.body)
 
-    if(!Hlp.hasAllParams(req.params, ['id']) || typeof forfait == 'undefined'){
+    if (!Hlp.hasAllParams(req.params, ['id']) || typeof forfait == 'undefined') {
         return res.status(400).json({
             message: "BAD REQUEST: not enugh parameters!"
         })
     }
 
     let id = req.params.id
-    
+
     Models.Forfait.findByPk(id).then(result => {
         if (result) {
 
-            Models.Forfait.update(forfait, { 
-                where: { id: id } 
+            Models.Forfait.update(forfait, {
+                where: { id: id }
             }).then(result => {
                 res.status(200).json(result)
             }).catch(err => {
@@ -126,7 +126,6 @@ function updateForfait(req, res) {
                     error: err
                 })
             });
-
 
         } else {
             res.status(404).json({
@@ -142,10 +141,10 @@ function updateForfait(req, res) {
 
 }
 
-module.exports= {
+module.exports = {
     getForfaits: getForfaits,
     getForfait: getForfait,
     deleteForfait: deleteForfait,
     addForfait: addForfait,
-    updateForfait:updateForfait
+    updateForfait: updateForfait
 }
