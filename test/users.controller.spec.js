@@ -1,9 +1,8 @@
 const chai = require('chai');
 const mocha = require('mocha');
 const chaiHttp = require('chai-http');
-const server = require('../app');
-const { getMaxListeners } = require('../app');
 const serverOnline = "http://gls-login.herokuapp.com";
+const serverLocal = "http://localhost:3004"
 
 chai.should();
 chai.use(chaiHttp);
@@ -70,7 +69,7 @@ let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZXJ0eUBnbWFpbC
             const datas =  {
                 "firstName":"testeur",
                 "lastName":"hello world",
-                "email":"totofake"+random+"@gmail.com",
+                "email":"williamfakeyou@gmail.com",
                 "phoneNumber":"0762612642",
                 "passWord":"123456",
                 "role":"ADMIN",
@@ -83,6 +82,7 @@ let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZXJ0eUBnbWFpbC
             .send(datas)
             .end((err, res)  => {
                 res.should.have.status(201);
+                // console.log(res);
                 done();
             });
         })

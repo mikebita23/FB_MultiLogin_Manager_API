@@ -1,7 +1,6 @@
 const chai = require('chai');
 const mocha = require('mocha');
 const chaiHttp = require('chai-http');
-const server = require('../app');
 const serverOnline = "http://gls-login.herokuapp.com";
 
 chai.should();
