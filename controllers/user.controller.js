@@ -17,12 +17,7 @@ function getUsers(req, res) {
 
 function getUser(req, res) {
 
-    // if (!userHlp.hasAllParams(req.params, ['id'])) {
-    //     return res.status(400).json({
-    //         message: "BAD REQUEST: 'id' not found !"
-    //     })
-    // }
-;
+    
     let id = (typeof req.body.id != 'undefined' && req.userData.isAdmin) ? userHlp.fetchAttrFromRequest(req.body, ['id']).id : req.userData.userId;
 
     Models.User.findByPk(id).then(result => {
