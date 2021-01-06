@@ -15,7 +15,7 @@ router.use( (req, res, next) => {
 
 router.get('/all', Controller.getForfaits)
 router.get('/:id', Controller.getForfait)
-router.get('/:id/del', Controller.deleteForfait)
+router.get('/del/:id', Controller.deleteForfait)
 router.post('/add', Controller.addForfait)
 router.patch('/:id/edit', Controller.updateForfait)
 
