@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 /**
  * test sur les methodes de users avec le verb GET
  */
-let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZXJ0eUBnbWFpbC5jb20iLCJ1c2VySWQiOjM1LCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDk4Mzc4NzksImV4cCI6MTYwOTg0MTQ3OX0.AtwXGy0g7Ph3A67_5j2l8Cxt1PEtMJ9mkyF8u2R9_rQ";
+let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZXJ0eUBnbWFpbC5jb20iLCJ1c2VySWQiOjM1LCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDk4NDI1NTcsImV4cCI6MTYwOTg0NjE1N30._Y9t26pqrkIosWyQl1PDBeYfp2hs1Jpum2G5LDdniLA";
 
  describe("TEST SUR L'API", () => {
 
@@ -52,7 +52,7 @@ let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZXJ0eUBnbWFpbC
             
         it("devra ajouter un message", (done) => {
             const datas =  {
-                "Object": "ceci est l'objet du message de test partie 2",
+                "Object": "ceci est l'objet du message test",
                 "Content": "bonjour tout le monde testing 2",
                 // "senderId": 35
 
@@ -75,7 +75,7 @@ let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZXJ0eUBnbWFpbC
      */
     describe(" DELETE endpoint: /Msg/del/id", () => {
         it("devra supprimer un message", (done) => {
-            const idMsg = 45;
+            const idMsg = 50;
            chai.request(serverOnline)
                .get('/Msg/del/'+idMsg)
                .set({ "Authorization": `Bearer ${token}` })
