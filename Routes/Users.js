@@ -6,7 +6,7 @@ router.get('/all', CheckAuthMiddleWare.checkAuth, (req, res) => {
     Controller.getUsers(req, res);
 });
 
-router.get('/get/:id', CheckAuthMiddleWare.checkAuth, (req, res) => {
+router.post('/get', CheckAuthMiddleWare.checkAuth, (req, res) => {
     Controller.getUser(req, res);
 });
 
