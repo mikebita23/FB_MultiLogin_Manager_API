@@ -25,6 +25,7 @@ router.post('/edit', CheckAuthMiddleWare.checkAuth,
 
 router.post('/add', (req, res) => {
     Controller.addUser(req, res);
+    
 });
 
 module.exports= router;
