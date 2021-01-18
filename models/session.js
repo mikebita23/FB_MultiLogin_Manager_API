@@ -12,9 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Forfait, {
-        foreignKey: 'forfaitId',
-    
-        
+        foreignKey: 'forfaitId'
       })
       this.belongsTo(models.User, {
       
@@ -25,10 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   Session.init({
     nom_session: DataTypes.STRING,
-   
     status: DataTypes.INTEGER,
-  
-    // forfaitId: DataTypes.INTEGER,
+  // forfaitId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
   }, {
     sequelize,

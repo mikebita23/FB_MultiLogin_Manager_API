@@ -39,6 +39,41 @@ function getUser(req, res) {
     });
 
 }
+function getUser1(req, res) {
+
+    // checking wich params should be update and fetching it values 
+    let paramsToUpdate = userHlp.wichParams(req.body, ['id'])
+    let newValues = userHlp.fetchAttrFromRequest(req.body, paramsToUpdate)
+
+    // no param verification
+    if (paramsToUpdate.length == 0) return res.status(400).json({ message: "BAD REQUEST: no parameters! to update" });
+    
+    // seting up the account to update
+    let id = (paramsToUpdate.indexOf('id') >= 0 && req.userData.isAdmin) ? newValues.id : req.userData.userId;
+
+
+        Models.User.findByPk(id).then(result => {
+            if (result) {
+                res.status(200).json(result);
+            } else {
+                res.status(404).json({
+                    message: "User Not Found!"
+                })
+            }
+        }).catch(Err => {
+            res.status(500).json({
+                message: "Something Went Wrong ! ",
+                error: Err
+            })
+        });
+
+       
+
+}
+
+
+
+
 
 function deleteUser(req, res) {
 
@@ -179,7 +214,7 @@ function signUp(req, res) {
 
 module.exports = {
     getUsers: getUsers,
-    getUser: getUser,
+    getUser1: getUser1,
     deleteUser: deleteUser,
     addUser: signUp,
     editUser: updateUser

@@ -102,6 +102,11 @@ function addSession(req, res){
     }
 }
 
+
+
+
+
+
 function updateSession(req, res) {
 
     let forfait = Hlp.fetchSessionFromRequest(req.body)
@@ -127,8 +132,6 @@ function updateSession(req, res) {
                     error: err
                 })
             });
-
-
         } else {
             res.status(404).json({
                 message: "Session Not Found!"
@@ -140,7 +143,6 @@ function updateSession(req, res) {
             error: err
         })
     });
-
 }
 function SignBlocage(req, res){
     
@@ -149,11 +151,9 @@ function SignBlocage(req, res){
             message: "Complete les pustin des paramatere"
         })
     }
-    console.log(req.params.id);
     Models.Session.findByPk(req.params.id).then(session =>{
         console.log(session);
-        if(session){
-            
+        if(session){    
             newSession = {
                 status: req.params.status
             }
