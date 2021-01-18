@@ -15,7 +15,7 @@ function getUsers(req, res) {
     });
 }
 
-function getUser(req, res) {
+function getUser1(req, res) {
 
     if(!Hlp.hasAllParams(req.params, ['id'])){
         return res.status(400).json({
@@ -39,6 +39,31 @@ function getUser(req, res) {
     });
 
 }
+function getUser(req, res) {
+
+    if (!userHlp.hasAllParams(req.params, ['id'])) {
+        return res.status(400).json({
+            message: "BAD REQUEST: 'id' not found !"
+        })
+    }
+
+    Models.User.findByPk(req.params.id).then(result => {
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({
+                message: "User Not Found!"
+            })
+        }
+    }).catch(Err => {
+        res.status(500).json({
+            message: "Something Went Wrong ! ",
+            error: Err
+        })
+    });
+
+}
+
 function updateUser(req, res) {
 
     // checking wich params should be update and fetching it values 

@@ -10,7 +10,7 @@ router.get('/all',
 
 router.get('/get', CheckAuthMiddleWare.checkAuth,
  (req, res) => {
-    Controller.getUser1(req, res);
+    Controller.getUser(req, res);
 });
 
 router.get('/remove/:id',CheckAuthMiddleWare.checkAuth, 
