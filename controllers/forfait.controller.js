@@ -122,7 +122,7 @@ function updateForf(req, res) {
         if(oldForfait){
             
             //verifying if new email is used by someone else
-            if(paramsToUpdate.indexOf('email') >= 0 ){
+            if(paramsToUpdate.indexOf('nom') >= 0 ){
                 Models.Forfait.findOne({
                     where: {
                         nom: newValues.nom,
@@ -201,5 +201,5 @@ module.exports= {
     getForfait: getForfait,
     deleteForfait: deleteForfait,
     addForfait: addForfait,
-    updateForfait:updateForfait
+    updateForfait:updateForf
 }

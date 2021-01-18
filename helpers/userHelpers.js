@@ -90,19 +90,27 @@ function fetchForfaitFromRequest(body) {
     }
     else return undefined
 }
-function fetchSessionFromRequest(body) {
-    if(hasAllParams(body, ['nom_session', 'nom_luminati','proxy_luminati','port_luminati','status','owner'] )){
-        return {
-                nom_session: body.nom_session,
-                nom_luminati:body.nom_luminati,
-                proxy_luminati:body.proxy_luminati,
-                port_luminati:body.port_luminati,
-                status:body.status,
-                owner:body.owner
+
+
+
+function fetchAttrFromRequest(body, attr) {
+    let res = {}
+    for (let i = 0; i < attr.length; i++) {
+        if(hasParam(body, attr[i])){
+            res[attr[i]] = body[attr[i]]
         }
     }
-    else return undefined
+    return res
 }
+function wichParams(req, params) {
+    let Param = []
+    for (let i = 0; i < params.length; i++) {
+        if(typeof req[params[i]] !== 'undefined')
+            Param.push(params[i])
+    }
+    return Param
+}
+
 function fetchSessionFromRequest(body) {
     if(hasAllParams(body, ['nom'] )){
         return {

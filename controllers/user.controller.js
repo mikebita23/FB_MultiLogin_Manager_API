@@ -167,11 +167,11 @@ function signUp(req, res) {
 
     let user = Hlp.fetchUserFromRequest(req.body)
 
-    if(typeof user == 'undefined'){
-        return res.status(400).json({
-            message: "BAD REQUEST: not enugh parameters!"
-        })
-    }
+    // if(typeof user == 'undefined'){
+    //     return res.status(400).json({
+    //         message: "BAD REQUEST: not enugh parameters!"
+    //     })
+    // }
 
     Models.User.findOne({
         where: { email: req.body.email }
@@ -184,7 +184,7 @@ function signUp(req, res) {
 
             ValidationResponse = Hlp.ValidateUserFormat(user)
 
-            if (ValidationResponse !== true) return res.status(400).json({ message: "Invalide Format !", error: ValidationResponse });
+             if (ValidationResponse !== true) return res.status(400).json({ message: "Invalide Format !", error: ValidationResponse });
 
             Bycrpt.genSalt(10, (err, salt) => {
                 Bycrpt.hash(user.passWord, salt, (err, hash) => {
