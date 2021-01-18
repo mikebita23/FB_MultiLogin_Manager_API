@@ -1,8 +1,5 @@
 const router = require('express').Router();
 const Controller = require(__controllers + 'message.controller')
-const UsrMiddleWare = require(__middleWares + 'userMiddleWare')
-
-router.use(UsrMiddleWare.checkAuth);
 
 router.use( (req, res, next) => {
     if(!req.userData.isAdmin)
