@@ -66,7 +66,7 @@ function ValidateForfaitFormat(Forfait) {
 }
 
 function fetchUserFromRequest(body) {
-    if(hasAllParams(body, ['firstName', 'lastName', 'email', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'] )){
+    if(hasAllParams(body, ['firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'] )){
         return {
             firstName: body.firstName,
             lastName: body.lastName,

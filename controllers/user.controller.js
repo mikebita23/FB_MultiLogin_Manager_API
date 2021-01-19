@@ -5,6 +5,7 @@ const secret = process.env.JWT_KEY
 
 
 function getUsers(req, res) {
+
     Models.User.findAll().then((Result) => {
         res.status(200).json(Result)
     }).catch((Err) => {
@@ -15,39 +16,20 @@ function getUsers(req, res) {
     });
 }
 
-function getUser1(req, res) {
 
-    if(!Hlp.hasAllParams(req.params, ['id'])){
-        return res.status(400).json({
-            message: "BAD REQUEST: 'id' not found !"
-        })
-    }
-
-    Models.User.findByPk(req.params.id).then(result => {
-        if (result) {
-            res.status(200).json(result);
-        } else {
-            res.status(404).json({
-                message: "User Not Found!"
-            })
-        }
-    }).catch(Err => {
-        res.status(500).json({
-            message: "Something Went Wrong ! ",
-            error: Err
-        })
-    });
-
-}
 function getUser(req, res) {
 
-    if (!userHlp.hasAllParams(req.params, ['id'])) {
-        return res.status(400).json({
-            message: "BAD REQUEST: 'id' not found !"
-        })
-    }
+    let id = req.userData.userId;
 
-    Models.User.findByPk(req.params.id).then(result => {
+    // if(!Hlp.hasAllParams(req.params, ['id']) || typeof user == 'undefined'){
+    //     return res.status(400).json({
+    //         message: "BAD REQUEST: not enugh parameters!"
+    //     })
+    // }
+
+
+
+    Models.User.findByPk(id).then(result => {
         if (result) {
             res.status(200).json(result);
         } else {
@@ -64,60 +46,6 @@ function getUser(req, res) {
 
 }
 
-function updateUser(req, res) {
-
-    // checking wich params should be update and fetching it values 
-    let paramsToUpdate = userHlp.wichParams(req.body, ['id', 'firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'])
-    let newValues = userHlp.fetchAttrFromRequest(req.body, paramsToUpdate)
-
-    // no param verification
-    if (paramsToUpdate.length == 0) return res.status(400).json({ message: "BAD REQUEST: no parameters! to update" });
-    
-    // seting up the account to update
-    let id = (paramsToUpdate.indexOf('id') >= 0 && req.userData.isAdmin) ? newValues.id : req.userData.userId;
-    delete newValues.id
-
-    //recovering old data
-    Models.User.findOne({
-        where: {id: id}
-    }).then(oldUser => {
-
-        // checking if user really exist
-        if(oldUser){
-            
-            //verifying if new email is used by someone else
-            if(paramsToUpdate.indexOf('email') >= 0 ){
-                Models.User.findOne({
-                    where: {
-                        email: newValues.email,
-                        id: {
-                            [Op.ne] : id
-                        }
-                    }
-                }).then(user => { if(user) return res.status(401).json({ message: 'Email already exist ' })
-                }).catch(err => { res.status(500).json({ message: "Something Went Wrong !!!", error: err })                })
-            }
-
-            // if new passWord it should be hashed
-            if(paramsToUpdate.indexOf('passWord') >= 0 ){
-                encrypHlp.hash(newValues.passWord, 10).then(hash => {
-                    newValues.passWord = hash
-                    Models.User.update(newValues, { where: { id: id } })
-                    .then(result => { return res.status(200).json(result)})
-                    .catch(err => { return res.status(500).json({message: "Something went wrong", error: err})});        
-                })
-            }else {
-                Models.User.update(newValues, { where: { id: id } })
-                .then(result => { return res.status(200).json(result)})
-                .catch(err => { return res.status(500).json({message: "Something went wrong", error: err})});
-            }               
-
-        }else {
-            return res.status(404).json({ message: "USER NOT FOUND !!" });
-        }
-    }).catch(err => { res.status(500).json({ message: "-Something Went Worong !!!", error: err }) })
-
-}
 
 
 
@@ -164,14 +92,14 @@ function deleteUser(req, res) {
 function updateUser(req, res) {
 
     let user = Hlp.fetchUserFromRequest(req.body)
+    let id = req.userData.userId;
 
-    if(!Hlp.hasAllParams(req.params, ['id']) || typeof user == 'undefined'){
-        return res.status(400).json({
-            message: "BAD REQUEST: not enugh parameters!"
-        })
-    }
+    // if(!Hlp.hasAllParams(req.params, ['id']) || typeof user == 'undefined'){
+    //     return res.status(400).json({
+    //         message: "BAD REQUEST: not enugh parameters!"
+    //     })
+    // }
 
-    let id = req.params.id
     
     Models.User.findOne({
         where: { id: id }
@@ -188,7 +116,7 @@ function updateUser(req, res) {
                         res.status(200).json(result)
                     }).catch(err => {
                         res.status(500).json({
-                            message: "Something went wrong",
+                            message: "Something went wrongxxxxxx",
                             error: err
                         })
                     });
@@ -261,7 +189,7 @@ function signUp(req, res) {
 
 module.exports = {
     getUsers: getUsers,
-    getUser1: getUser1,
+    getUser: getUser,
     deleteUser: deleteUser,
     addUser: signUp,
     editUser: updateUser

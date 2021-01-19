@@ -18,7 +18,7 @@ function getMessage(req, res){
             message: "BAD REQUEST: 'id' not found !"
         })
     }
-
+    let id = req.userData.userId;
     Models.Message.findByPk(req.params.id).then(result => {
         if (result) {
             res.status(200).json(result);
