@@ -33,6 +33,11 @@ CheckAuthMiddleWare.checkAuth,
 (req, res) => {
     Controller.getUser(req, res);
 });
+router.get('/userMsgForf', 
+CheckAuthMiddleWare.checkAuth, 
+(req,res) => {
+    Controller.getUserMessageForfait(req,res);
+});
 
 
 module.exports= router;

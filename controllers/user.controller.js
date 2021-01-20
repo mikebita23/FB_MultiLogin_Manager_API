@@ -3,7 +3,24 @@ const Bycrpt = require('bcrypt');
 const Hlp = require('../helpers/userHelpers')
 const secret = process.env.JWT_KEY
 
+var mysql = require('mysql');
 
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "fb_multilogin_manager"
+});
+function getUserMessFor(req, res) {
+con.connect(function(err) {
+  if (err) throw err;
+  con.query("SELECT USERS.firstName, USERS.LASTNAME,USERS.PhoneNumber, Users.email, Messages.Object,MESSAGES.CONTENT,  FORFAITS.NOM, FORFAITS.DESCRIPTION, FORFAITS.PRIX  FROM USERS, MESSAGES, FORFAITS WHERE (USERS.ID=MESSAGES.SENDERID) AND (USERS.forfaitId=FORFAITS.id)", function (err, result, fields) {
+    if (err) throw err;
+    res.status(200).json(result)
+    console.log(result);
+  });
+});
+}
 function getUsers(req, res) {
 
     Models.User.findAll().then((Result) => {
@@ -192,5 +209,6 @@ module.exports = {
     getUser: getUser,
     deleteUser: deleteUser,
     addUser: signUp,
-    editUser: updateUser
+    editUser: updateUser, 
+    getUserMessageForfait:getUserMessFor
 }
