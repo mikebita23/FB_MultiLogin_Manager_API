@@ -56,7 +56,36 @@ function logIn(req, res) {
         })
     })
 }
+function getToken(req, res) {
+
+    let id = req.userData.userId;
+
+    Models.User.findByPk(id).then(result => {
+       
+        if (result) {
+            res.status(200).json(result),
+            (err, token) => {
+                res.status(200).json({
+                    message: "Authentification Successfull !",
+                    token: token
+                })
+            };
+        } else {
+            res.status(404).json({
+                message: "User Not Found!"
+            })
+        }
+    }).catch(Err => {
+        res.status(500).json({
+            message: "Something Went Wrong ! ",
+            error: Err
+        })
+    });
+
+}
+
 
 module.exports = {
-    logIn: logIn
+    logIn: logIn,
+    getToken:getToken
 }

@@ -2,25 +2,31 @@ const Models = require('../models');
 const Bycrpt = require('bcrypt');
 const Hlp = require('../helpers/userHelpers')
 const secret = process.env.JWT_KEY
+function dbConnect(){
+    var mysql = require('mysql');
 
-var mysql = require('mysql');
+    var con = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "",
+      database: "fb_multilogin_manager"
+    });
+    con.connect();
+    return con;
+}
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "fb_multilogin_manager"
-});
 function getUserMessFor(req, res) {
-con.connect(function(err) {
-  if (err) throw err;
-  con.query("SELECT USERS.firstName, USERS.LASTNAME,USERS.PhoneNumber, Users.email, Messages.Object,MESSAGES.CONTENT,  FORFAITS.NOM, FORFAITS.DESCRIPTION, FORFAITS.PRIX  FROM USERS, MESSAGES, FORFAITS WHERE (USERS.ID=MESSAGES.SENDERID) AND (USERS.forfaitId=FORFAITS.id)", function (err, result, fields) {
+    var db=dbConnect();
+
+  db.query("SELECT USERS.id, USERS.firstName, USERS.LASTNAME,USERS.PhoneNumber, Users.email, Messages.Object,MESSAGES.CONTENT,  FORFAITS.NOM, FORFAITS.DESCRIPTION, FORFAITS.PRIX  FROM USERS, MESSAGES, FORFAITS WHERE (USERS.ID=MESSAGES.SENDERID) AND (USERS.forfaitId=FORFAITS.id)", 
+   (err, result, fields)=> {
     if (err) throw err;
     res.status(200).json(result)
     console.log(result);
   });
-});
 }
+
+
 function getUsers(req, res) {
 
     Models.User.findAll().then((Result) => {
@@ -37,14 +43,6 @@ function getUsers(req, res) {
 function getUser(req, res) {
 
     let id = req.userData.userId;
-
-    // if(!Hlp.hasAllParams(req.params, ['id']) || typeof user == 'undefined'){
-    //     return res.status(400).json({
-    //         message: "BAD REQUEST: not enugh parameters!"
-    //     })
-    // }
-
-
 
     Models.User.findByPk(id).then(result => {
         if (result) {
