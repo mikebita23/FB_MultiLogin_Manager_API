@@ -6,8 +6,9 @@ require('./Routes/Dirs');
 require('dotenv/config');
 const Express = require('express');
 const BodyParsser = require('body-parser');
+const fileUpload = require('connect-busboy');
 const Routes = require(__Routes + 'Routes');
-const authMiddleWare = require(__middleWares + 'userMiddleWare')
+const authMiddleWare = require(__middleWares + 'userMiddleWare');
 
 global.__proxyPorts = []
 global.__proxyCount = 0
@@ -16,6 +17,9 @@ global.__proxyCount = 0
 const app = Express();
 
 // MIDDLEWARES
+app.use(fileUpload({
+        highWaterMark: 2 * 1024 * 1024 // 2Mb buffer
+}))
 app.use(BodyParsser.json());
 
 //ROUTES
@@ -26,7 +30,7 @@ app.use('/users',Routes.Users);
 app.use('/Msg', authMiddleWare.checkAuth, Routes.Messages);
 app.use('/forf', authMiddleWare.checkAuth, Routes.Forfaits);
 app.use('/Auth', Routes.Auth);
-app.use('/Dwn', Routes.Download);
+app.use('/file', Routes.file);
 app.use('/proxy', authMiddleWare.checkAuth, Routes.Proxy)
 
 // START LISTENING

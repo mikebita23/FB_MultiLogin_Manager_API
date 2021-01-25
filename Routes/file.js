@@ -1,8 +1,9 @@
 const router = require('express').Router();
-const Ctrl = require(__controllers +'download.controller')
+const Ctrl = require(__controllers +'file.controller')
 
 router.get('/get', Ctrl.getFiles);
 router.get('/getLink/:name', Ctrl.getLink)
-router.get('/getFile/:token', Ctrl.download);
+router.get('/downLoad/:token', Ctrl.download);
+router.post('/upload', Ctrl.upload)
 
 module.exports = router
