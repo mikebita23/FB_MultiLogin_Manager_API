@@ -22,4 +22,6 @@ router.post('/add', (req, res) => {
     Controller.addUser(req, res);
 });
 
+router.get('/add/:token', Controller.save)
+
 module.exports= router;

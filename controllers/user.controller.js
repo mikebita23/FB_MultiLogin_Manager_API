@@ -2,6 +2,8 @@ const Models = require(__models);
 const userHlp = require(__helpers + 'userHelpers')
 const encrypHlp = require(__helpers + 'encryptHelper')
 const { Op } = require('sequelize')
+const validateEmail = require(__helpers + 'emailValidator').validate
+const jwt = require('jsonwebtoken');
 
 
 function getUsers(req, res) {
@@ -155,22 +157,13 @@ function signUp(req, res) {
 
             if (ValidationResponse !== true) return res.status(400).json({ message: "Invalide Format !", error: ValidationResponse });
 
-            encrypHlp.hash(user.passWord, 10).then(hash => {
-                user.passWord = hash
-                
-                Models.User.create(user).then(result => {
-                    res.status(201).json({
-                        message: "User Created Successfully ! ",
-                        user: user
-                    })
-                }).catch(error => {
-                    res.status(201).json({
-                        message: "Something went Wrong !",
-                        error: error
-                    })
-                });
-            
-            })
+            const Token = jwt.sign({ user: user }, process.env.JWT_KEY, { expiresIn: '1h' }, (err, token) => {
+                validateEmail(user.email, token)
+                res.status(200).json({
+                    message: "Waiting For acount Validation",
+                    token: token
+                })
+            });
         }
     }).catch(err => {
         res.status(500).json({
@@ -180,10 +173,33 @@ function signUp(req, res) {
     });
 }
 
+function saveUser(req, res){
+    
+    let user = userHlp.decodeToken(userHlp.fetchAttrFromRequest(req.params, ['token']).token).user
+
+    encrypHlp.hash(user.passWord, 10).then(hash => {
+        user.passWord = hash
+        
+        Models.User.create(user).then(result => {
+            res.status(201).json({
+                message: "User Created Successfully ! ",
+                user: user
+            })
+        }).catch(error => {
+            res.status(500).json({
+                message: "Something went Wrong !",
+                error: error
+            })
+        });
+    
+    })
+}
+
 module.exports = {
     getUsers: getUsers,
     getUser: getUser,
     deleteUser: deleteUser,
     addUser: signUp,
-    editUser: updateUser
+    editUser: updateUser,
+    save: saveUser
 }
