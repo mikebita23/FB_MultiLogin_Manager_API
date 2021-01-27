@@ -22,13 +22,22 @@ app.use(fileUpload({
         highWaterMark: 2 * 1024 * 1024 // 2Mb buffer
 }))
 app.use(BodyParsser.json());
-app.use(cors)
+
+app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "*");
+        if (req.method === 'OPTIONS') {
+                res.header('Access-Control-Allow-Methods', 'PUT, POST,PATCH,DELETE,GET');
+                return res.status(200).json({});
+        }
+        next();
+});
 
 //ROUTES
 app.get('/', (req, res) => {
         res.sendFile(__views + 'index.html')
 });
-app.use('/users',Routes.Users);
+app.use('/users', Routes.Users);
 app.use('/Msg', authMiddleWare.checkAuth, Routes.Messages);
 app.use('/forf', authMiddleWare.checkAuth, Routes.Forfaits);
 app.use('/Auth', Routes.Auth);
