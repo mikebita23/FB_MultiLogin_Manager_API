@@ -20,7 +20,8 @@ function ValidateUserFormat(User) {
         phoneNumber: {
             type: "string",
             max: 10,
-            min: 10
+            min: 10,
+            nullable: true
         },
         passWord: {
             type: "string",
