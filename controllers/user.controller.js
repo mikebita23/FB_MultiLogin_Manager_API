@@ -136,7 +136,7 @@ function updateUser(req, res) {
 
 function signUp(req, res) {
     
-    if (!userHlp.hasAllParams(req.body, ['id', 'firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'])) {
+    if (!userHlp.hasAllParams(req.body, ['firstName', 'lastName', 'email', 'passWord'])) {
         return res.status(400).json({
             message: "BAD REQUEST: not enugh parameters!"
         })
