@@ -9,6 +9,7 @@ const BodyParsser = require('body-parser');
 const fileUpload = require('connect-busboy');
 const Routes = require(__Routes + 'Routes');
 const authMiddleWare = require(__middleWares + 'userMiddleWare');
+const cors = require('cors')
 
 global.__proxyPorts = []
 global.__proxyCount = 0
@@ -21,6 +22,7 @@ app.use(fileUpload({
         highWaterMark: 2 * 1024 * 1024 // 2Mb buffer
 }))
 app.use(BodyParsser.json());
+app.use(cors)
 
 //ROUTES
 app.get('/', (req, res) => {
