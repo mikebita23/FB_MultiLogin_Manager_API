@@ -17,25 +17,25 @@ function ValidateUserFormat(User) {
         email:{
             type: "email",
         } ,
-        phoneNumber: {
-            type: "string",
-            max: 10,
-            min: 10,
-            nullable: true
-        },
+        // phoneNumber: {
+        //     type: "string",
+        //     max: 10,
+        //     min: 10,
+        //     nullable: true
+        // },
         passWord: {
             type: "string",
             max: 50
         },
-        role: {
-            type: "string",
-            max: 20,
-            nullable: true
-        },
-        forfaitId:{
-           type: "number",
-           nullable: true
-        } 
+        // role: {
+        //     type: "string",
+        //     max: 20,
+        //     nullable: true
+        // },
+        // forfaitId:{
+        //    type: "number",
+        //    nullable: true
+        // } 
     }
 
     return Validator.validate(User, schema);

@@ -141,8 +141,8 @@ function signUp(req, res) {
             message: "BAD REQUEST: not enugh parameters!"
         })
     }
-
-    let user = userHlp.fetchUserFromRequest(req.body)
+    
+    let user = userHlp.fetchAttrFromRequest(req.body, userHlp.wichParams(req.body, ['id', 'firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId']))
 
     Models.User.findOne({
         where: { email: req.body.email }
