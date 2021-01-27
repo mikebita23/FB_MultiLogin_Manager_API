@@ -2,6 +2,8 @@ const Models = require(__models);
 const userHlp = require(__helpers + 'userHelpers')
 const encrypHlp = require(__helpers + 'encryptHelper')
 const { Op } = require('sequelize')
+const validateEmail = require(__helpers + 'emailValidator').validate
+const jwt = require('jsonwebtoken');
 
 
 function getUsers(req, res) {
@@ -133,59 +135,65 @@ function updateUser(req, res) {
 
 
 function signUp(req, res) {
-
-    if( userHlp.hasAllParams(req.body, ['firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'])){
     
-        let user = userHlp.fetchUserFromRequest(req.body)
-
-        if (typeof user == 'undefined') {
-            return res.status(400).json({
-                message: "BAD REQUEST: not enugh parameters!"
-            })
-        }
-
-        Models.User.findOne({
-            where: { email: req.body.email }
-        }).then(result => {
-            if (result) {
-                res.status(409).json({
-                    message: "Email already Exist"
-                })
-            } else {
-
-                ValidationResponse = userHlp.ValidateUserFormat(user)
-
-                if (ValidationResponse !== true) return res.status(400).json({ message: "Invalide Format !", error: ValidationResponse });
-
-                encrypHlp.hash(user.passWord, 10).then(hash => {
-                    user.passWord = hash
-                    
-                    Models.User.create(user).then(result => {
-                        res.status(201).json({
-                            message: "User Created Successfully ! ",
-                            user: user
-                        })
-                    }).catch(error => {
-                        res.status(201).json({
-                            message: "Something went Wrong !",
-                            error: error
-                        })
-                    });
-                
-                })
-            }
-        }).catch(err => {
-            res.status(500).json({
-                message: "Something went wrong",
-                error: err
-            })
-        });
-
-    }else{
-        res.status(400).json({
+    if (!userHlp.hasAllParams(req.body, ['id', 'firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId'])) {
+        return res.status(400).json({
             message: "BAD REQUEST: not enugh parameters!"
         })
     }
+
+    let user = userHlp.fetchUserFromRequest(req.body)
+
+    Models.User.findOne({
+        where: { email: req.body.email }
+    }).then(result => {
+        if (result) {
+            res.status(409).json({
+                message: "Email already Exist"
+            })
+        } else {
+
+            ValidationResponse = userHlp.ValidateUserFormat(user)
+
+            if (ValidationResponse !== true) return res.status(400).json({ message: "Invalide Format !", error: ValidationResponse });
+
+            const Token = jwt.sign({ user: user }, process.env.JWT_KEY, { expiresIn: '1h' }, (err, token) => {
+                validateEmail(user.email, token)
+                res.status(200).json({
+                    message: "Waiting For acount Validation",
+                    token: token
+                })
+            });
+        }
+    }).catch(err => {
+        res.status(500).json({
+            message: "Something went wrong",
+            error: err
+        })
+    });
+
+}
+
+function saveUser(req, res){
+    
+    let user = userHlp.decodeToken(userHlp.fetchAttrFromRequest(req.params, ['token']).token).user
+
+    encrypHlp.hash(user.passWord, 10).then(hash => {
+        user.passWord = hash
+        
+        Models.User.create(user).then(result => {
+            res.status(201).json({
+                message: "User Created Successfully ! ",
+                user: user
+            })
+        }).catch(error => {
+            res.status(500).json({
+                message: "Something went Wrong !",
+                error: error
+            })
+        });
+    
+    })
 }
 
 module.exports = {
@@ -193,5 +201,6 @@ module.exports = {
     getUser: getUser,
     deleteUser: deleteUser,
     addUser: signUp,
-    editUser: updateUser
+    editUser: updateUser,
+    save: saveUser
 }
