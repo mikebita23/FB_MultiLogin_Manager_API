@@ -111,6 +111,13 @@ function decodeToken(Token){
     }
 }
 
+function generateToken(obj) {
+    jwt.sign(obj,  process.env.JWT_KEY,{ expiresIn: obj.expiresIn || '1h' }, (err, token) => {
+        if(err) return undefined
+        return token
+    });
+}
+
 function hasAllParams(req, params) {
     for (let i = 0; i < params.length; i++) {
         if( typeof req[params[i]] == 'undefined' )
@@ -141,5 +148,6 @@ module.exports = {
     decodeToken: decodeToken,
     wichParams: wichParams,
     fetchAttrFromRequest: fetchAttrFromRequest,
-    hasParam: hasParam
+    hasParam: hasParam,
+    genToken: generateToken
 }

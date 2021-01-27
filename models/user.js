@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id'
       })
 
+      this.AssociateToSession = this.hasMany(models.session,{
+        foreignKey: 'id'
+      })
+
     }
   };
   User.init({

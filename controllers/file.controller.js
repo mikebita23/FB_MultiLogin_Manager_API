@@ -73,5 +73,9 @@ module.exports = {
                 });
             });
         });
+    },
+
+    getSession: (req, res) => {
+        // do something
     }
 }
