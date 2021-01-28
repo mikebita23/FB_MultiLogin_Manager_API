@@ -113,8 +113,8 @@ function decodeToken(Token){
 }
 
 function generateToken(obj) {
-    jwt.sign(obj,  process.env.JWT_KEY,{ expiresIn: obj.expiresIn || '1h' }, (err, token) => {
-        if(err) return undefined
+    return jwt.sign(obj,  process.env.JWT_KEY,{ expiresIn: obj.expiresIn || '1h' }, (err, token) => {
+        if(err !== null) return undefined
         return token
     });
 }

@@ -1,5 +1,6 @@
 const Models = require(__models);
 const Hlp = require(__helpers + 'userHelpers');
+const jwt = require('jsonwebtoken')
 
 module.exports = {
     create: (req, res) => {
@@ -8,20 +9,27 @@ module.exports = {
             let session = Hlp.fetchAttrFromRequest(req.body, ['credentials', 'status'])
 
             session.owner = req.userData.isAdmin ? 0 : req.userData.userId;
-            session.credentials = typeof session.credentials === 'object' ? Hlp.generateToken(session.credentials) : ""
 
-            Models.session.create(session).then(result => {
-                res.status(201).json({
-                    message: "session Created Successfully ! ",
-                    session: result
-                })
-            }).catch(error => {
-                res.status(500).json({
-                    message: "Something went Wrong !",
-                    error: error
-                })
-            });
-
+            if (typeof session.credentials === 'object') {
+                jwt.sign(session.credentials, process.env.JWT_KEY, (err, token) => {
+                    if (err) {
+                        session.credentials = ""
+                        return
+                    }
+                    session.credentials = token
+                    Models.session.create(session).then(result => {
+                        res.status(201).json({
+                            message: "session Created Successfully ! ",
+                            session: result
+                        })
+                    }).catch(error => {
+                        res.status(500).json({
+                            message: "Something went Wrong !",
+                            error: error
+                        })
+                    });
+                });
+            }
         } else {
             res.status(400).json({
                 message: "BAD REQUEST: not enugh parameters!"
@@ -34,28 +42,25 @@ module.exports = {
 
         let owner = req.userData.isAdmin ? 0 : req.userData.userId;
 
-        if (owner === 0 && Hlp.hasParam(req.body, 'all' && req.body.all)) {
+        if (owner === 0 && Hlp.hasParam(req.body, 'allAccounts') && req.body.allAccounts) {
             Models.session.findAll().then(result => {
-                res.status(200).json({
-                    sessions: result
-                })
+                res.status(200).json(result)
+                res.end()
             }).catch(error => {
                 res.status(500).json({
                     message: "Something went Wrong !",
                     error: error
                 })
             })
-            res.end()
+
         }
 
         Models.session.findAll({
-            where : {
+            where: {
                 owner: owner
             }
         }).then(result => {
-            res.status(200).json({
-                sessions: result
-            })
+            res.status(200).json(result)
         }).catch(error => {
             res.status(500).json({
                 message: "Something went Wrong !",
@@ -66,19 +71,20 @@ module.exports = {
     },
 
     getSession: (req, res) => {
-      
-        if(!Hlp.hasParam(req.params, 'id')){
+
+        if (!Hlp.hasParam(req.params, 'id')) {
             return res.status(400).json({
                 message: "BAD REQUEST: not enugh parameters!"
             })
-        } 
+        }
 
         let owner = req.userData.isAdmin ? 0 : req.userData.userId;
 
-        let condition = req.userData.isAdmin ? { where: {id: req.params.id}} : { where: {owner: owner, id: req.params.id}}
-        
+        let condition = req.userData.isAdmin ? { where: { id: req.params.id } } : { where: { owner: owner, id: req.params.id } }
+
         Models.session.findOne(condition).then(result => {
             if (result) {
+                result.credentials = Hlp.decodeToken(result.credentials)
                 res.status(200).json(result);
             } else {
                 res.status(404).json({
@@ -95,41 +101,63 @@ module.exports = {
 
     updateSession: (req, res) => {
 
-        
-        let paramsToUpdate = userHlp.wichParams(req.body, ['credentials', 'status'])
-        let newValues = userHlp.fetchAttrFromRequest(req.body, paramsToUpdate)
 
-        if (paramsToUpdate.length == 0 || !Hlp.hasParam(req.params, 'id')) 
+        let paramsToUpdate = Hlp.wichParams(req.body, ['credentials', 'status', 'owner'])
+        let newValues = Hlp.fetchAttrFromRequest(req.body, paramsToUpdate)
+
+        if (paramsToUpdate.length == 0 || !Hlp.hasParam(req.params, 'id'))
             return res.status(400).json({ message: "BAD REQUEST: no parameters! to update" });
 
         Models.session.findByPk(req.params.id).then(oldsession => {
-            if(oldsession){
-                Models.session.update(newValues, {where: { id: req.params.id}})
-                .then(result => { return res.status(200).json(result)})
-                .catch(err => { return res.status(500).json({message: "Something went wrong", error: err})});
-            }else{
+            if (oldsession) {
+                if(req.userData.isAdmin || oldsession.owner == req.userData.userId){
+                    if(typeof newValues.credentials !== 'undefined'){
+                        
+                        jwt.sign(newValues.credentials, process.env.JWT_KEY, (err, token) => {
+                            if (err) {
+                                console.log(err);
+                                session.credentials = ""
+                                return
+                            }
+                            newValues.credentials = token
+                            Models.session.update(newValues, { where: { id: req.params.id } })
+                            .then(result => { return res.status(200).json(result) })
+                            .catch(err => { return res.status(500).json({ message: "Something went wrong", error: err }) });
+                        })
+                    }else{
+                        Models.session.update(newValues, { where: { id: req.params.id } })
+                        .then(result => { return res.status(200).json(result) })
+                        .catch(err => { return res.status(500).json({ message: "Something went wrong", error: err }) });
+                    }
+                }
+                else{
+                    res.status(401).json({
+                        message: "Session update not permited !"
+                    })
+                }
+            } else {
                 res.status(404).json({
                     message: "Session Not Found!"
                 })
             }
-        }).catch(err =>{
+        }).catch(err => {
             res.status(500).json({
                 message: "Something Went Wrong ! ",
-                error: Err
+                error: err
             })
         })
     },
 
-    deleteSession: (req, res) =>{
-        if (!userHlp.hasParams(req.params, 'id')) {
+    deleteSession: (req, res) => {
+        if (!Hlp.hasParam(req.params, 'id')) {
             return res.status(400).json({
                 message: "BAD REQUEST: 'id' not found !"
             })
         }
 
-        Models.session.findByPk(req.params.id).then(session=>{
-            if(session){
-                if(req.userData.isAdmin || session.owner == req.userData.id){
+        Models.session.findByPk(req.params.id).then(session => {
+            if (session) {
+                if (req.userData.isAdmin || session.owner == req.userData.userId) {
                     Models.session.destroy(
                         {
                             where: { id: req.params.id }
@@ -145,12 +173,12 @@ module.exports = {
                             error: err
                         })
                     });
-                }else{
+                } else {
                     res.status(401).json({
                         message: "Session delete is not permited !"
                     })
                 }
-            }else{
+            } else {
                 res.status(404).json({
                     message: "Session Not Found!"
                 })
