@@ -42,7 +42,8 @@ app.use('/Msg', authMiddleWare.checkAuth, Routes.Messages);
 app.use('/forf', authMiddleWare.checkAuth, Routes.Forfaits);
 app.use('/Auth', Routes.Auth);
 app.use('/file', Routes.file);
-app.use('/proxy', authMiddleWare.checkAuth, Routes.Proxy)
+app.use('/proxy', authMiddleWare.checkAuth, Routes.Proxy);
+// app.use('/session', authMiddleWare.checkAuth, Routes.Sessions);
 
 // START LISTENING
 module.exports = app.listen(process.env.PORT || 3004);
