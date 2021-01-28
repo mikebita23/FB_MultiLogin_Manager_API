@@ -142,8 +142,16 @@ function signUp(req, res) {
         })
     }
     
-    let user = userHlp.fetchAttrFromRequest(req.body, userHlp.wichParams(req.body, ['id', 'firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId']))
-
+    let incomingUser = userHlp.fetchAttrFromRequest(req.body, userHlp.wichParams(req.body, ['id', 'firstName', 'lastName', 'email', 'phoneNumber', 'passWord', 'role', 'forfaitId']))
+    let user = {
+        firstName: incomingUser.firstName,
+        lastName: incomingUser.lastName,
+        email: incomingUser.email,
+        passWord: incomingUser.passWord,
+        phoneNumber: incomingUser.phoneNumber || "",
+        role: incomingUser.role || "CLIENT",
+        forfaitId: incomingUser.forfaitId || null
+    }
     Models.User.findOne({
         where: { email: req.body.email }
     }).then(result => {
