@@ -44,6 +44,7 @@ app.use('/Auth', Routes.Auth);
 app.use('/file', Routes.file);
 app.use('/proxy', authMiddleWare.checkAuth, Routes.Proxy);
 app.use('/session', authMiddleWare.checkAuth, Routes.Sessions);
+app.use('/prospect', Routes.Prospect);
 
 // START LISTENING
 module.exports = app.listen(process.env.PORT || 3004);
