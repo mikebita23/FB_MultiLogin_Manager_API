@@ -1,7 +1,6 @@
 const Models=require('../models');
 const Hlp =require('../helpers/userHelpers');
 
-
 function addProspect(req, res){
 
 if(Hlp.hasAllParams(req.body, ['nom_Prospect','prenom_Prospect','numero_tel'])){
