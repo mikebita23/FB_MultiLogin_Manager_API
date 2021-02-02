@@ -183,25 +183,29 @@ function signUp(req, res) {
 }
 
 function saveUser(req, res){
-    
     let user = userHlp.decodeToken(userHlp.fetchAttrFromRequest(req.params, ['token']).token).user
-
-    encrypHlp.hash(user.passWord, 10).then(hash => {
-        user.passWord = hash
-        
-        Models.User.create(user).then(result => {
-            res.status(201).json({
-                message: "User Created Successfully ! ",
-                user: user
-            })
-        }).catch(error => {
-            res.status(500).json({
-                message: "Something went Wrong !",
-                error: error
-            })
-        });
-    
-    })
+    if(user){
+        encrypHlp.hash(user.passWord, 10).then(hash => {
+            user.passWord = hash
+            
+            Models.User.create(user).then(result => {
+                res.status(201).json({
+                    message: "User Created Successfully ! ",
+                    user: user
+                })
+            }).catch(error => {
+                res.status(500).json({
+                    message: "Something went Wrong !",
+                    error: error
+                })
+            });
+        })
+    }else{
+        res.status(401).json({
+            message: "Invalid URL !",
+            error: error
+        })
+    }
 }
 
 module.exports = {
