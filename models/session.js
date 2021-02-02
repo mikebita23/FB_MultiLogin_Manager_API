@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   session.init({
+    name: DataTypes.STRING,
     credentials: DataTypes.STRING,
     owner: DataTypes.INTEGER,
     status: DataTypes.INTEGER

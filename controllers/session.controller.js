@@ -5,29 +5,32 @@ const jwt = require('jsonwebtoken')
 module.exports = {
     create: (req, res) => {
 
-        if (Hlp.hasAllParams(req.body, ['credentials', 'status'])) {
-            let session = Hlp.fetchAttrFromRequest(req.body, ['credentials', 'status'])
+        if (Hlp.hasAllParams(req.body, ['name', 'credentials', 'status'])) {
+            let session = Hlp.fetchAttrFromRequest(req.body, ['name', 'credentials', 'status'])
 
             session.owner = req.userData.isAdmin ? 0 : req.userData.userId;
 
             if (typeof session.credentials === 'object') {
                 jwt.sign(session.credentials, process.env.JWT_KEY, (err, token) => {
                     if (err) {
-                        session.credentials = ""
-                        return
-                    }
-                    session.credentials = token
-                    Models.session.create(session).then(result => {
-                        res.status(201).json({
-                            message: "session Created Successfully ! ",
-                            session: result
-                        })
-                    }).catch(error => {
                         res.status(500).json({
                             message: "Something went Wrong !",
                             error: error
                         })
-                    });
+                    } else {
+                        session.credentials = token
+                        Models.session.create(session).then(result => {
+                            res.status(201).json({
+                                message: "session Created Successfully ! ",
+                                session: result
+                            })
+                        }).catch(error => {
+                            res.status(500).json({
+                                message: "Something went Wrong !",
+                                error: error
+                            })
+                        });
+                    }
                 });
             }
         } else {
@@ -102,7 +105,7 @@ module.exports = {
     updateSession: (req, res) => {
 
 
-        let paramsToUpdate = Hlp.wichParams(req.body, ['credentials', 'status', 'owner'])
+        let paramsToUpdate = Hlp.wichParams(req.body, ['name', 'credentials', 'status', 'owner'])
         let newValues = Hlp.fetchAttrFromRequest(req.body, paramsToUpdate)
 
         if (paramsToUpdate.length == 0 || !Hlp.hasParam(req.params, 'id'))
@@ -110,27 +113,29 @@ module.exports = {
 
         Models.session.findByPk(req.params.id).then(oldsession => {
             if (oldsession) {
-                if(req.userData.isAdmin || oldsession.owner == req.userData.userId){
-                    if(typeof newValues.credentials !== 'undefined'){
-                        
+                if (req.userData.isAdmin || oldsession.owner == req.userData.userId) {
+                    if (typeof newValues.credentials !== 'undefined') {
+
                         jwt.sign(newValues.credentials, process.env.JWT_KEY, (err, token) => {
                             if (err) {
-                                console.log(err);
-                                session.credentials = ""
-                                return
+                                res.status(500).json({
+                                    message: "Something went Wrong !",
+                                    error: error
+                                })
+                            } else {
+                                newValues.credentials = token
+                                Models.session.update(newValues, { where: { id: req.params.id } })
+                                    .then(result => { return res.status(200).json(result) })
+                                    .catch(err => { return res.status(500).json({ message: "Something went wrong", error: err }) });
                             }
-                            newValues.credentials = token
-                            Models.session.update(newValues, { where: { id: req.params.id } })
+                        })
+                    } else {
+                        Models.session.update(newValues, { where: { id: req.params.id } })
                             .then(result => { return res.status(200).json(result) })
                             .catch(err => { return res.status(500).json({ message: "Something went wrong", error: err }) });
-                        })
-                    }else{
-                        Models.session.update(newValues, { where: { id: req.params.id } })
-                        .then(result => { return res.status(200).json(result) })
-                        .catch(err => { return res.status(500).json({ message: "Something went wrong", error: err }) });
                     }
                 }
-                else{
+                else {
                     res.status(401).json({
                         message: "Session update not permited !"
                     })
