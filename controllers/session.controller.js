@@ -54,7 +54,6 @@ module.exports = {
         if (owner === 0 && Hlp.hasParam(req.body, 'allAccounts') && req.body.allAccounts) {
             Models.session.findAll().then(result => {
                 res.status(200).json(result)
-                res.end()
             }).catch(error => {
                 res.status(500).json({
                     message: "Something went Wrong !",
@@ -62,20 +61,20 @@ module.exports = {
                 })
             })
 
-        }
-
-        Models.session.findAll({
-            where: {
-                owner: owner
-            }
-        }).then(result => {
-            res.status(200).json(result)
-        }).catch(error => {
-            res.status(500).json({
-                message: "Something went Wrong !",
-                error: error
+        }else{
+            Models.session.findAll({
+                where: {
+                    owner: owner
+                }
+            }).then(result => {
+                res.status(200).json(result)
+            }).catch(error => {
+                res.status(500).json({
+                    message: "Something went Wrong !",
+                    error: error
+                })
             })
-        })
+        }
 
     },
 
@@ -201,5 +200,52 @@ module.exports = {
             })
         });
 
+    },
+
+    setToUser : (req, res) => {
+
+        if(!req.userData.isAdmin){
+            return res.status(401).json({
+                message: "BAD REQUEST: Action not permited!"
+            })
+        }
+
+        if (!Hlp.hasParam(req.params, 'id')) {
+            return res.status(400).json({
+                message: "BAD REQUEST: not enugh parameters!"
+            })
+        }
+        let NbrOfSessions =  Hlp.hasParam(req.body, 'NbrOfSessions') ? req.body.NbrOfSessions : 1
+
+        Models.session.findAndCountAll({where: {owner: 0} }).then(result => {
+            console.log('Asking to update : ', NbrOfSessions);
+            if(result.count > NbrOfSessions){
+                Models.User.findByPk(req.params.id).then(user => {
+                    console.log('Attributing sessions to : ', user.email);
+                    if(user){
+                        (async ()=>{
+                            for (let i = 0; i < NbrOfSessions; i++) {
+                                console.log('session on hand : ', result.rows[i].name);
+                                result.rows[i].owner = req.params.id;
+                                await result.rows[i].save();
+                            }
+                        })()
+                    }else{
+                        res.status(404).json({
+                            message: 'USER NOT FOUND ! '
+                        })
+                    }
+                })
+            }else{
+                res.status(404).json({
+                    message: 'Free Session NOT FOUND or NOT ENOUGH! '
+                })
+            }
+        }).catch( err => {
+            res.status(500).json({
+                message: "something went wrong ! ",
+                error: err
+            })
+        })
     }
 }

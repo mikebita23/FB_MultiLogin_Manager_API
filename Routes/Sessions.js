@@ -13,4 +13,6 @@ router.patch('/edit/:id', Controller.updateSession);
 
 router.post('/add', Controller.create);
 
+router.post('/setTo/:id', Controller.setToUser)
+
 module.exports= router;
