@@ -223,13 +223,22 @@ module.exports = {
                 Models.User.findByPk(req.params.id).then(user => {
                     console.log('Attributing sessions to : ', user.email);
                     if(user){
-                        (async ()=>{
-                            for (let i = 0; i < NbrOfSessions; i++) {
-                                console.log('session on hand : ', result.rows[i].name);
-                                result.rows[i].owner = req.params.id;
-                                await result.rows[i].save();
-                            }
-                        })()
+                        let savingAction = []
+                        for (let i = 0; i < NbrOfSessions; i++) {
+                            console.log('session on hand : ', result.rows[i].name);
+                            result.rows[i].owner = req.params.id;
+                            savingAction.push(result.rows[i].save());
+                        }
+                        Promise.all(savingAction).then(() => {
+                            res.status(200).json({
+                                message: "Sessions Atributed to " +  req.params.id
+                            })
+                        }).catch(err =>{
+                            res.status(500).json({
+                                message: "Error while Attributing sessions",
+                                error: err
+                            })
+                        })
                     }else{
                         res.status(404).json({
                             message: 'USER NOT FOUND ! '
