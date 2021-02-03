@@ -7,6 +7,8 @@ router.get('/get/all', Controller.getSessions);
 
 router.get('/get/:id', Controller.getSession);
 
+router.get('/getData/:id', Controller.getData)
+
 router.get('/remove/:id', Controller.deleteSession);
 
 router.patch('/edit/:id', Controller.updateSession);

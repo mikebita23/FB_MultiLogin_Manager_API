@@ -2,6 +2,18 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken') 
 const path = require('path')
 
+
+function sendFile(file, res) {
+    res.download(file, err =>{
+        if(err){
+            res.status(500).json({
+                message: "Something Went Wrong",
+                err: err
+            })
+        }
+    })
+}
+
 module.exports = {
     getFiles: (req, res) => {
 
@@ -43,14 +55,7 @@ module.exports = {
         
         Token = require(__helpers+'userHelpers').decodeToken(req.params.token)
         if(Token.exp > new Date().getTime() / 1000){
-            res.download(__baseDir + '/Files/out/' + Token.name, err =>{
-                if(err){
-                    res.status(500).json({
-                        message: "Something Went Wrong",
-                        err: err
-                    })
-                }
-            })
+            sendFile(__baseDir + '/Files/out/' + Token.name, res)
         }else{
             res.status(402).json({
                 message:"Expired link"
@@ -59,12 +64,16 @@ module.exports = {
     },
 
     upload: (req, res) =>{
-        
+        if (!Hlp.hasParam(req.params, 'id')) {
+            return res.status(400).json({
+                message: "BAD REQUEST: not enugh parameters!"
+            })
+        }
         req.pipe(req.busboy); 
  
         req.busboy.on('file', (fieldname, file, filename) => {
         
-            const fstream = fs.createWriteStream(path.join(__baseDir, '/Files/sessions/', filename));
+            const fstream = fs.createWriteStream(path.join(__baseDir, '/Files/sessions/', `${req.params.id}`));
             file.pipe(fstream);
         
             fstream.on('close', () => {
@@ -75,7 +84,5 @@ module.exports = {
         });
     },
 
-    getSession: (req, res) => {
-        // do something
-    }
+    sendFile: sendFile
 }

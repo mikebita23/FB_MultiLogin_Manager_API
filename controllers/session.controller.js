@@ -1,5 +1,6 @@
 const Models = require(__models);
 const Hlp = require(__helpers + 'userHelpers');
+const sendFile = require(__controllers + 'file.controller').sendFile;
 const jwt = require('jsonwebtoken')
 
 module.exports = {
@@ -253,6 +254,35 @@ module.exports = {
         }).catch( err => {
             res.status(500).json({
                 message: "something went wrong ! ",
+                error: err
+            })
+        })
+    },
+
+    getData : (req, res) => {
+        if (!Hlp.hasParam(req.params, 'id')) {
+            return res.status(400).json({
+                message: "BAD REQUEST: not enugh parameters!"
+            })
+        }
+
+        Models.session.findByPk(req.params.id).then(session => {
+            if(session){
+                if( req.userData.isAdmin || session.owner == req.userData.id)
+                    sendFile(`${__baseDir}/Files/sessions/${req.params.id}`, res)
+                else{
+                    res.status(401).json({
+                        message: "action NOT PERMITED !"
+                    })
+                }
+            }else{
+                res.status(404).json({
+                    message: "Session NOT FOUND !"
+                })
+            }
+        }).catch( err => {
+            res.status(500).json({
+                message: "something went wrong !",
                 error: err
             })
         })
