@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken')
 module.exports = {
     create: (req, res) => {
 
+        if(!req.userData.isAdmin){
+            return res.status(401).json({
+                message: "BAD REQUEST: Action not permited!"
+            })
+        }
+
         if (Hlp.hasAllParams(req.body, ['name', 'credentials', 'status'])) {
             let session = Hlp.fetchAttrFromRequest(req.body, ['name', 'credentials', 'status'])
 
