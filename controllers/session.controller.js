@@ -219,14 +219,14 @@ module.exports = {
         let NbrOfSessions =  Hlp.hasParam(req.body, 'NbrOfSessions') ? req.body.NbrOfSessions : 1
 
         Models.session.findAndCountAll({where: {owner: 0} }).then(result => {
-            console.log('Asking to update : ', NbrOfSessions);
+            
             if(result.count > NbrOfSessions){
                 Models.User.findByPk(req.params.id).then(user => {
-                    console.log('Attributing sessions to : ', user.email);
+                    
                     if(user){
                         let savingAction = []
                         for (let i = 0; i < NbrOfSessions; i++) {
-                            console.log('session on hand : ', result.rows[i].name);
+                            
                             result.rows[i].owner = req.params.id;
                             savingAction.push(result.rows[i].save());
                         }
@@ -268,9 +268,9 @@ module.exports = {
 
         Models.session.findByPk(req.params.id).then(session => {
             if(session){
-                if( req.userData.isAdmin || session.owner == req.userData.id)
-                    sendFile(`${__baseDir}/Files/sessions/${req.params.id}`, res)
-                else{
+                if( req.userData.isAdmin || session.owner == req.userData.id){
+                    sendFile(req.params.id, res)
+                }else{
                     res.status(401).json({
                         message: "action NOT PERMITED !"
                     })
@@ -282,7 +282,7 @@ module.exports = {
             }
         }).catch( err => {
             res.status(500).json({
-                message: "something went wrong !",
+                message: "something went wrong !!",
                 error: err
             })
         })

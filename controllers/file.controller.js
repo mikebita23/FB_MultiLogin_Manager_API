@@ -1,13 +1,14 @@
 const fs = require('fs');
 const jwt = require('jsonwebtoken') 
 const path = require('path')
+const Hlp = require(__helpers + 'userHelpers');
 
 
 function sendFile(file, res) {
     res.download(file, err =>{
         if(err){
             res.status(500).json({
-                message: "Something Went Wrong",
+                message: "Something Went Wrong while downloading",
                 err: err
             })
         }
@@ -84,5 +85,15 @@ module.exports = {
         });
     },
 
-    sendFile: sendFile
+    sendFile: (id, res) =>{
+        let Dir = path.join(__baseDir, '/Files/sessions/', id)
+        fs.access(Dir, fs.F_OK, (err) => {
+            if(err){
+                return res.status(404).json({
+                    message: "Session Data does not exist on server"
+                })
+            }
+            sendFile(Dir, res);
+        })
+    }
 }
