@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
 });
 app.use('/users', Routes.Users);
 app.use('/Msg', authMiddleWare.checkAuth, Routes.Messages);
-app.use('/forf', authMiddleWare.checkAuth, Routes.Forfaits);
+app.use('/forf', Routes.Forfaits);
 app.use('/Auth', Routes.Auth);
 app.use('/file', Routes.file);
 app.use('/proxy', authMiddleWare.checkAuth, Routes.Proxy);
