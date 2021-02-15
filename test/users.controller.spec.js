@@ -82,7 +82,6 @@ let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6ZXJ0eUBnbWFpbC
             .send(datas)
             .end((err, res)  => {
                 res.should.have.status(201);
-                // console.log(res);
                 done();
             });
         })
