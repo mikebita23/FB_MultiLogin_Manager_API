@@ -92,11 +92,14 @@ function fetchAttrFromRequest(body, attr) {
 }
 
 function fetchForfaitFromRequest(body) {
-    if(hasAllParams(body, ['nom', 'prix', 'description'] )){
+    if(hasAllParams(body, ['nom', 'prix','prix_base', 'nb_session','description'] )){
         return {
-            nom: body.nom,
-            prix: body.prix,
-            description: body.description,
+            nom: req.body.nom,
+            prix: req.body.prix,
+            prix_base: req.body.prix_base,
+            nb_session: req.body.nb_session,
+            description: req.body.description
+            
         }
     }
     else return undefined
