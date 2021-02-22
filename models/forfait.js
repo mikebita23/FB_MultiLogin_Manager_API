@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   Forfait.init({
     nom: DataTypes.STRING,
     prix: DataTypes.FLOAT,
+    prix_base: DataTypes.FLOAT,
+    nb_session: DataTypes.FLOAT,
     description: DataTypes.TEXT
   }, {
     sequelize,

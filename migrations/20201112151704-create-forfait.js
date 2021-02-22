@@ -14,6 +14,12 @@ module.exports = {
       prix: {
         type: Sequelize.FLOAT
       },
+      prix_base: {
+        type: Sequelize.FLOAT
+      },
+      nb_session: {
+        type: Sequelize.FLOAT
+      },
       description: {
         type: Sequelize.TEXT
       },

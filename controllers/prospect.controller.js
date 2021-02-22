@@ -3,14 +3,14 @@ const Hlp =require('../helpers/userHelpers');
 
 function addProspect(req, res){
 
-if(Hlp.hasAllParams(req.body, ['nom_Prospect','prenom_Prospect','numero_tel'])){
+if(Hlp.hasAllParams(req.body, ['nom_Prospect','sujet_Prospect','email_tel','contenu'])){
     
     Models.Prospect.create(
         {
          nom_Prospect: req.body.nom_Prospect,
-         prenom_Prospect:req.body.prenom_Prospect,
-         numero_tel:req.body.numero_tel
-
+         sujet_Prospect:req.body.sujet_Prospect,
+         email_tel:req.body.email_tel,
+         contenu:req.body.contenu
         }
     ).then(result=>{
     res.status(201).json({
