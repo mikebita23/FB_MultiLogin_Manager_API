@@ -11,10 +11,13 @@ module.exports = {
       nom_Prospect: {
         type: Sequelize.STRING
       },
-      prenom_Prospect: {
+      sujet_Prospect: {
         type: Sequelize.STRING
       },
-      numero_tel: {
+      email_tel: {
+        type: Sequelize.STRING
+      },
+      contenu: {
         type: Sequelize.STRING
       },
       createdAt: {

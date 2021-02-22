@@ -15,8 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   };
   Prospect.init({
     nom_Prospect: DataTypes.STRING,
-    prenom_Prospect:DataTypes.STRING,
-    numero_tel:DataTypes.STRING
+    sujet_Prospect:DataTypes.STRING,
+    email_tel:DataTypes.STRING,
+    contenu:DataTypes.STRING
 
   }, {
     sequelize,

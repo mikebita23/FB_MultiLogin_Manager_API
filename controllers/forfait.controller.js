@@ -75,12 +75,14 @@ function deleteForfait(req, res) {
 
 function addForfait(req, res) {
 
-    if (Hlp.hasAllParams(req.body, ['nom', 'prix', 'description'])) {
+    if (Hlp.hasAllParams(req.body, ['nom', 'prix','prix_base', 'nb_session','description'])) {
 
         Models.forfait.create(
             {
                 nom: req.body.nom,
                 prix: req.body.prix,
+                prix_base: req.body.prix_base,
+                nb_session: req.body.nb_session,
                 description: req.body.description
             }
         ).then(result => {
