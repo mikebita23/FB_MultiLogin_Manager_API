@@ -2,9 +2,15 @@ const router = require('express').Router();
 const Controller = require(__controllers + 'user.controller')
 const CheckAuthMiddleWare= require(__middleWares + 'userMiddleWare')
 
-router.get('/all', CheckAuthMiddleWare.checkAuth, (req, res) => {
-    Controller.getUsers(req, res);
-});
+
+
+router.get('/all', CheckAuthMiddleWare.checkAuth, (req, res, next) => {
+    if(!req.userData.isAdmin)
+        res.status(401).json({
+            message: 'Unauthorized Request !'
+        })
+    else next()
+},Controller.getUsers);
 
 router.post('/get', CheckAuthMiddleWare.checkAuth, (req, res) => {
     Controller.getUser(req, res);
