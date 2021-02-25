@@ -85,8 +85,16 @@ module.exports = {
         });
     },
 
-    sendFile: (id, res) =>{
-        let Dir = path.join(__baseDir, '/Files/sessions/', id)
+    sendSession: (req, res) =>{
+        if (!Hlp.hasParam(req.params, 'id')) {
+            return res.status(400).json({
+                message: "BAD REQUEST: not enugh parameters!"
+            })
+        }
+
+        let id = req.params.id
+        
+        let Dir = path.join(__baseDir, '/Files/sessions/', `${id}`)
         fs.access(Dir, fs.F_OK, (err) => {
             if(err){
                 return res.status(404).json({

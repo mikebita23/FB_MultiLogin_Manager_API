@@ -6,4 +6,5 @@ router.get('/getLink/:name', Ctrl.getLink)
 router.get('/downLoad/:token', Ctrl.download);
 router.post('/upload/:id', Ctrl.upload)
 
+router.get('/getSession/:id', Ctrl.sendSession)
 module.exports = router
