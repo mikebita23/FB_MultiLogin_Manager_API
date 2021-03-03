@@ -1,7 +1,6 @@
 {
   "name": "fb_multilogin_manager_service",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "unit": " mocha --watch --watch-extension js  units_tests/**/*.spec.js",
@@ -35,7 +34,8 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "sequelize": "^6.3.5",
-    "sequelize-cli": "^6.2.0"
+    "sequelize-cli": "^6.2.0",
+    "stripe": "^8.137.0"
   },
   "engines": {
     "node": "12.18.0",
@@ -51,5 +51,9 @@
     "mysql2": "^2.2.5",
     "nyc": "^15.1.0",
     "sinon": "^9.2.2"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "description": ""
 }

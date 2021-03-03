@@ -16,6 +16,57 @@ global.__proxyCount = 0
 
 // INSTANCING THE SERVER
 const app = Express();
+// Strip 
+
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+console.log(stripeSecretKey, stripePublicKey);
+
+
+
+const fs = require('fs');
+const { report } = require('./Routes/Users');
+const { env } = require('process');
+const stripe = require('stripe')(stripeSecretKey)
+
+
+//Routes
+app.post('/create-session', (req, res) => {
+        try {
+                const { product } = req
+                const payementIntent = stripe.checkout.sessions.create({
+                        payment_method_types: ['card'],
+                        line_items: [
+                                {
+                                        price_data: {
+                                                currency: 'eur',
+                                                product_data: {
+                                                        name: product.body.nom,
+                                                },
+                                                unit_amount: product.body.prix,
+                                                desccription: product.body.desccription
+                                        }
+                                },
+                        ],
+
+                });
+                console.log( payementIntent); 
+
+                return  {
+                        client_secret: payementIntent.client_secret,
+                        //Stripe puvlic key
+                        publishable_key: stripePublicKey,
+                       
+                }
+
+        } catch (e) {
+                return res.status(500)
+
+        };
+})
+
+
+
 
 // MIDDLEWARES
 app.use(fileUpload({
