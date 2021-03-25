@@ -37,6 +37,7 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
         res.sendFile(__views + 'index.html')
 });
+app.use('/email', Routes.sendEmail);
 app.use('/users', Routes.Users);
 app.use('/Msg', authMiddleWare.checkAuth, Routes.Messages);
 app.use('/forf', Routes.Forfaits);
@@ -47,4 +48,4 @@ app.use('/session', authMiddleWare.checkAuth, Routes.Sessions);
 app.use('/prospect', Routes.Prospect);
 
 // START LISTENING
-module.exports = app.listen(process.env.PORT || 3004);
+module.exports = app.listen(process.env.PORT || 3005);
