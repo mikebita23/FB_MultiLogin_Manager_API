@@ -1,6 +1,6 @@
 const Models = require(__models);
 const Hlp = require(__helpers + 'userHelpers');
-const sendFile = require(__controllers + 'file.controller').sendFile;
+const sendFile = require(__controllers + 'file.controller').sendSession;
 const jwt = require('jsonwebtoken')
 
 module.exports = {
@@ -269,7 +269,7 @@ module.exports = {
         Models.session.findByPk(req.params.id).then(session => {
             if(session){
                 if( req.userData.isAdmin || session.owner == req.userData.id){
-                    sendFile(req.params.id, res)
+                    sendFile(req, res)
                 }else{
                     res.status(401).json({
                         message: "action NOT PERMITED !"
