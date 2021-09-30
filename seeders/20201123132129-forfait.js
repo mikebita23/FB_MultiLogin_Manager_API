@@ -20,17 +20,23 @@ module.exports = {
           nom: "Basic Forfait",
           prix: 9.99,
           description: faker.lorem.text(10),
+          createdAt : faker.date.past(2) ,
+          updatedAt : faker.date.past(2) ,
           
         },
         {
           nom: "Normal Forfait",
           prix: 19.99,
-          description: faker.lorem.text(10)
+          description: faker.lorem.text(10),
+          createdAt : faker.date.past(2) ,
+          updatedAt : faker.date.past(2) ,
         },
         {
           nom: "Best Forfait",
           prix: 25.99,
-          description: faker.lorem.text(10)
+          description: faker.lorem.text(10),
+          createdAt : faker.date.past(2) ,
+          updatedAt : faker.date.past(2) ,
         }
       ], {});
 

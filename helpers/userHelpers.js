@@ -88,6 +88,22 @@ function fetchForfaitFromRequest(body) {
             description: body.description,
         }
     }
+   
+    else return undefined
+    
+}
+
+function fetchProduitFromRequest(body) {
+    if(hasAllParams(body, ['name', 'category', 'sku', 'price', 'quantity'] )){
+        return {
+            name: body.name,
+            category: body.category,
+            sku: body.sku,
+            price: body.price,
+            quantity: body.quantity
+           
+        }
+    }
     else return undefined
 }
 
@@ -114,6 +130,7 @@ module.exports = {
     ValidateForfaitFormat:ValidateForfaitFormat,
     fetchUserFromRequest: fetchUserFromRequest,
     fetchForfaitFromRequest:fetchForfaitFromRequest,
+    fetchProduitFromRequest:fetchProduitFromRequest,
     hasAllParams: hasAllParams,
     decodeToken: decodeToken
 }

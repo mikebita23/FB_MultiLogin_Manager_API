@@ -14,11 +14,14 @@ module.exports = {
     */
      return queryInterface.bulkInsert('categories', [
       {
-        nom: "Computers",
-       
+        name: "Computers",
+        createdAt : faker.date.past(2) ,
+        updatedAt : faker.date.past(2) ,
       },
       {
-        nom: "Games",
+        name: "Games",
+        createdAt : faker.date.past(2) ,
+          updatedAt : faker.date.past(2) ,
         
       }
       

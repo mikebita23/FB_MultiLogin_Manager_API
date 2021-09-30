@@ -12,7 +12,9 @@ for (let i = 0; i < 1000; i++) {
       phoneNumber: faker.phone.phoneNumber('0#########'),
       passWord: faker.internet.password(),
       role: "USER",
-      forfaitId: faker.random.number({min: 1, max: 3})
+      forfaitId: faker.random.number({min: 1, max: 3}),
+      createdAt : faker.date.past(2) ,
+          updatedAt : faker.date.past(2) ,
     })
 }
 
