@@ -19,7 +19,8 @@ module.exports = {
         {
           nom: "Basic Forfait",
           prix: 9.99,
-          description: faker.lorem.text(10)
+          description: faker.lorem.text(10),
+          
         },
         {
           nom: "Normal Forfait",
